@@ -1,0 +1,59 @@
+Revision history for Dist-Zilla-PluginBundle-Author-RWSTAUNER
+
+2.000 2011-04-12
+
+  - Rename module into Author:: namespace
+
+  - Use the @Git bundle by default
+
+  - Replace deprecated Dist::Zilla::Plugin::PodLinkTests with
+    Dist::Zilla::Plugin::Test::Pod::LinkCheck and
+    Dist::Zilla::Plugin::Test::Pod::No404s
+
+1.002 2011-04-11
+
+  [Deprecations]
+  - The current namespace is deprecated.
+    This always was/should have been an Author bundle.
+
+  [Add Dist::Zilla Plugins]
+  - Prepender
+  - Git::NextVersion (instead of Git::DescribeVersion)
+
+1.001 2011-02-10
+
+  - Manage Changes respectably by replacing GitFmtChanges plugin
+  with NextRelease, CheckChangesHasContent, and CPANChangesTests
+
+1.000007 2011-01-19
+
+  - remove Moose::Autobox dependency
+  - allow attributes to be overridden in dist.ini for any included plugin
+  - add 'skip_plugins' option
+
+0.009007 2010-12-30
+
+  - Use Pod::Weaver::Plugin::WikiDoc
+
+0.008004 2010-12-16
+
+  - Require Dist::Zilla::Stash::PodWeaver
+
+  [Add Dist::Zilla Plugins]
+  - Authority
+  - DualBuilders (prefer 'build')
+  - PodLinkTests if available
+  - PodSpellingTests
+  - ReportVersions::Tiny
+
+  [Add Pod::Weaver Plugins]
+  - StopWords
+
+0.004001 2010-11-17
+
+  - Use Dist::Zilla::Plugin::GithubMeta
+  - Lower required version of Pod::Weaver::Section::Support
+
+0.003011 2010-11-15
+
+  - Initial Release to CPAN
