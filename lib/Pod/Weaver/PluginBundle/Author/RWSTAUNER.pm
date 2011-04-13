@@ -8,7 +8,7 @@
 #
 package Pod::Weaver::PluginBundle::Author::RWSTAUNER;
 BEGIN {
-  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '2.000';
+  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '2.001';
 }
 BEGIN {
   $Pod::Weaver::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -121,7 +121,7 @@ Pod::Weaver::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Pod::Weaver config
 
 =head1 VERSION
 
-version 2.000
+version 2.001
 
 =head1 SYNOPSIS
 
