@@ -17,7 +17,8 @@ BEGIN {
 #
 
 use Test::More;
-eval 'use Test::CPAN::Changes';
-plan skip_all => 'Test::CPAN::Changes required for this test' if $@;
-changes_ok();
-done_testing();
+
+eval "use Test::Vars";
+plan skip_all => "Test::Vars required for testing unused vars"
+  if $@;
+all_vars_ok();

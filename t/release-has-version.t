@@ -17,7 +17,8 @@ BEGIN {
 #
 
 use Test::More;
-eval 'use Test::CPAN::Changes';
-plan skip_all => 'Test::CPAN::Changes required for this test' if $@;
-changes_ok();
-done_testing();
+
+eval "use Test::HasVersion";
+plan skip_all => "Test::HasVersion required for testing version numbers"
+  if $@;
+all_pm_version_ok();
