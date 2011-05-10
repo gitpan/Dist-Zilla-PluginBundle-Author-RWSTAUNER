@@ -2,6 +2,8 @@
 use strict;
 use warnings;
 use Test::More 0.96;
+use lib 't/lib';
+use Test::DZil;
 
 my $NAME = 'Author::RWSTAUNER';
 my $BNAME = "\@$NAME";
@@ -52,54 +54,82 @@ foreach my $test (
 {
   my $bundle = init_bundle({});
   my $test_name = 'expected plugins included';
-  ok( has_plugin($bundle, 'PodWeaver'),    $test_name);
-  ok( has_plugin($bundle, 'AutoPrereqs'),  $test_name);
-  ok( has_plugin($bundle, 'CompileTests'), $test_name);
-  ok( has_plugin($bundle, 'ExtraTests'),   $test_name);
-  ok(!has_plugin($bundle, 'FakeRelease'),  $test_name);
-  ok( has_plugin($bundle, 'UploadToCPAN'), $test_name);
+
+  my $has_ok = sub {
+    ok( has_plugin($bundle, @_), "expected plugin included: $_[0]");
+  };
+  my $has_not = sub {
+    ok(!has_plugin($bundle, @_), "plugin expectedly not found: $_[0]");
+  };
+  &$has_ok('PodWeaver');
+  &$has_ok('PodWeaver');
+  &$has_ok('AutoPrereqs');
+  &$has_ok('CompileTests');
+  &$has_ok('CheckExtraTests');
+  &$has_not('FakeRelease');
+  &$has_ok('UploadToCPAN');
+  &$has_ok('CompileTests');
 
   $bundle = init_bundle({auto_prereqs => 0});
-  ok(!has_plugin($bundle, 'AutoPrereqs'),  $test_name);
+  &$has_not('AutoPrereqs');
 
   $bundle = init_bundle({fake_release => 1});
-  ok( has_plugin($bundle, 'FakeRelease'),  $test_name);
-  ok(!has_plugin($bundle, 'UploadToCPAN'), $test_name);
+  &$has_ok('FakeRelease');
+  &$has_not('UploadToCPAN');
 
   $bundle = init_bundle({is_task => 1});
-  ok( has_plugin($bundle, 'TaskWeaver'),   $test_name);
-  ok(!has_plugin($bundle, 'PodWeaver'),    $test_name);
+  &$has_ok('TaskWeaver');
+  &$has_not('PodWeaver');
 
   $bundle = init_bundle({releaser => 'Goober'});
-  ok( has_plugin($bundle, 'Goober'),       $test_name);
-  ok(!has_plugin($bundle, 'UploadToCPAN'), $test_name);
+  &$has_ok('Goober');
+  &$has_not('UploadToCPAN');
 
-  $bundle = init_bundle({skip_plugins => 'CompileTests|ExtraTests'});
-  ok(!has_plugin($bundle, 'CompileTests'), $test_name);
-  ok(!has_plugin($bundle, 'ExtraTests'),   $test_name);
+  $bundle = init_bundle({skip_plugins => '\b(CompileTests|ExtraTests|GenerateManifestSkip)$'});
+  &$has_not('CompileTests');
+  &$has_not('ExtraTests');
+  &$has_not('GenerateManifestSkip', 1);
+
+  $bundle = init_bundle({disable_tests => 'EOLTests,CompileTests'});
+  &$has_not('EOLTests');
+  &$has_not('CompileTests');
+  &$has_ok('NoTabsTests');
 }
 
 # test releaser
 foreach my $releaser (
   [{},                                        'UploadToCPAN'],
   [{fake_release => 1},                       'FakeRelease'],
-  [{releaser => 'Goober'},                    'Goober'],
+  [{releaser => ''},                           undef],
+  [{releaser => 'No_Op_Releaser'},            'No_Op_Releaser'],
   # fake_release wins
-  [{releaser => 'Goober', fake_release => 1}, 'FakeRelease'],
+  [{releaser => 'No_Op_Releaser', fake_release => 1}, 'FakeRelease'],
 ){
   my ($config, $exp) = @$releaser;
-  releaser_is(init_bundle($config), $exp);
+  releaser_is(new_dzil($config), $exp);
   # env always overrides
   local $ENV{DZIL_FAKERELEASE} = 1;
-  releaser_is(init_bundle($config), 'FakeRelease');
+  releaser_is(new_dzil($config), 'FakeRelease');
 }
 
 done_testing;
 
 # helper subs
 sub has_plugin {
-  my ($bundle, $plug) = @_;
-  scalar grep { $_->[1] =~ /::($plug)$/ } @{$bundle->plugins};
+  my ($bundle, $plug, $by_name) = @_;
+  # default to plugin module, but allow searching by name
+  my $index = $by_name ? 0 : 1;
+  # should use List::Util::any
+  scalar grep { $_->[$index] =~ /\b($plug)$/ } @{$bundle->plugins};
+}
+sub new_dzil {
+  return Builder->from_config(
+    { dist_root => 'corpus' },
+    { add_files => {
+        'source/dist.ini' => simple_ini([$BNAME => @_]),
+      }
+    },
+  );
 }
 sub init_bundle {
   my $bundle = $mod->new(name => $BNAME, payload => $_[0]);
@@ -108,14 +138,14 @@ sub init_bundle {
   return $bundle;
 }
 sub releaser_is {
-  my ($bundle, $exp) = @_;
-  # ignore any after-release plugins at the end
-  my @after = qw(
-    Git::
-    InstallRelease
-  );
-  my $skip = qr/^Dist::Zilla::Plugin::(${\join('|', @after)})/;
-  # NOTE: just looking for the last plugin in the array is fragile
-  my $releaser = (grep { $_->[1] !~ $skip } reverse @{$bundle->plugins})[0];
-  like($releaser->[1], qr/\b$exp$/, "expected releaser: $exp");
+  my ($dzil, $exp) = @_;
+  my @releasers = @{ $dzil->plugins_with(-Releaser) };
+
+  if( !defined($exp) ){
+    is(scalar @releasers, 0, 'no releaser');
+  }
+  else {
+    is(scalar @releasers, 1, 'single releaser');
+    like($releasers[0]->plugin_name, qr/\b$exp$/, "expected releaser: $exp");
+  }
 }

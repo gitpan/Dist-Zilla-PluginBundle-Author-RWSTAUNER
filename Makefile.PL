@@ -4,7 +4,7 @@ use warnings;
 
 BEGIN { require 5.006; }
 
-use ExtUtils::MakeMaker 6.31;
+use ExtUtils::MakeMaker 6.30;
 
 
 
@@ -12,24 +12,27 @@ my %WriteMakefileArgs = (
   'ABSTRACT' => 'RWSTAUNER\'s Dist::Zilla config',
   'AUTHOR' => 'Randy Stauner <rwstauner@cpan.org>',
   'BUILD_REQUIRES' => {
-    'English' => '0',
+    'Dist::Zilla::Role::Plugin' => '0',
+    'Dist::Zilla::Role::Releaser' => '0',
     'File::Find' => '0',
     'File::Temp' => '0',
-    'ExtUtils::MakeMaker' => '6.31',
+    'ExtUtils::MakeMaker' => '6.30',
+    'Test::DZil' => '0',
     'Test::More' => '0.96'
   },
   'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.31'
+    'ExtUtils::MakeMaker' => '6.30'
   },
   'DISTNAME' => 'Dist-Zilla-PluginBundle-Author-RWSTAUNER',
   'EXE_FILES' => [],
   'LICENSE' => 'perl',
   'NAME' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
   'PREREQ_PM' => {
-    'Dist::Zilla' => '4.102345',
-    'Dist::Zilla::Plugin::Authority' => '1.001',
+    'Dist::Zilla' => '4.200005',
+    'Dist::Zilla::Plugin::Authority' => '1.004',
     'Dist::Zilla::Plugin::Bugtracker' => '0',
     'Dist::Zilla::Plugin::CheckChangesHasContent' => '0.003',
+    'Dist::Zilla::Plugin::CheckExtraTests' => '0',
     'Dist::Zilla::Plugin::DualBuilders' => '1.001',
     'Dist::Zilla::Plugin::Git::NextVersion' => '0',
     'Dist::Zilla::Plugin::GithubMeta' => '0.10',
@@ -45,11 +48,10 @@ my %WriteMakefileArgs = (
     'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',
     'Dist::Zilla::Plugin::Repository' => '0.16',
     'Dist::Zilla::Plugin::TaskWeaver' => '0.101620',
-    'Dist::Zilla::Plugin::Test::Pod::LinkCheck' => '0',
     'Dist::Zilla::Plugin::Test::Pod::No404s' => '0',
     'Dist::Zilla::PluginBundle::Basic' => '0',
     'Dist::Zilla::PluginBundle::Git' => '1.110500',
-    'Dist::Zilla::PluginBundle::TestingMania' => '0.007',
+    'Dist::Zilla::PluginBundle::TestingMania' => '0.010',
     'Dist::Zilla::Role::PluginBundle::Easy' => '0',
     'Dist::Zilla::Stash::PodWeaver' => '1.001000',
     'Moose' => '0',
@@ -63,7 +65,7 @@ my %WriteMakefileArgs = (
     'Pod::Weaver::PluginBundle::Default' => '0',
     'Pod::Weaver::Section::Support' => '1.001'
   },
-  'VERSION' => '3.000',
+  'VERSION' => '3.100',
   'test' => {
     'TESTS' => 't/*.t'
   }

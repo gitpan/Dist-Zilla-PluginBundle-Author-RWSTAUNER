@@ -48,10 +48,11 @@ sub pmver {
     return sprintf('%-45s => %-10s%-15s%s', $module, $pmver, $wanted, "\n");
 }
 
-eval { $v .= pmver('Dist::Zilla','4.102345') };
-eval { $v .= pmver('Dist::Zilla::Plugin::Authority','1.001') };
+eval { $v .= pmver('Dist::Zilla','4.200005') };
+eval { $v .= pmver('Dist::Zilla::Plugin::Authority','1.004') };
 eval { $v .= pmver('Dist::Zilla::Plugin::Bugtracker','any version') };
 eval { $v .= pmver('Dist::Zilla::Plugin::CheckChangesHasContent','0.003') };
+eval { $v .= pmver('Dist::Zilla::Plugin::CheckExtraTests','any version') };
 eval { $v .= pmver('Dist::Zilla::Plugin::DualBuilders','1.001') };
 eval { $v .= pmver('Dist::Zilla::Plugin::Git::NextVersion','any version') };
 eval { $v .= pmver('Dist::Zilla::Plugin::GithubMeta','0.10') };
@@ -67,14 +68,14 @@ eval { $v .= pmver('Dist::Zilla::Plugin::Prepender','1.100960') };
 eval { $v .= pmver('Dist::Zilla::Plugin::ReportVersions::Tiny','1.01') };
 eval { $v .= pmver('Dist::Zilla::Plugin::Repository','0.16') };
 eval { $v .= pmver('Dist::Zilla::Plugin::TaskWeaver','0.101620') };
-eval { $v .= pmver('Dist::Zilla::Plugin::Test::Pod::LinkCheck','any version') };
 eval { $v .= pmver('Dist::Zilla::Plugin::Test::Pod::No404s','any version') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::Basic','any version') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::Git','1.110500') };
-eval { $v .= pmver('Dist::Zilla::PluginBundle::TestingMania','0.007') };
+eval { $v .= pmver('Dist::Zilla::PluginBundle::TestingMania','0.010') };
+eval { $v .= pmver('Dist::Zilla::Role::Plugin','any version') };
 eval { $v .= pmver('Dist::Zilla::Role::PluginBundle::Easy','any version') };
+eval { $v .= pmver('Dist::Zilla::Role::Releaser','any version') };
 eval { $v .= pmver('Dist::Zilla::Stash::PodWeaver','1.001000') };
-eval { $v .= pmver('English','any version') };
 eval { $v .= pmver('File::Find','any version') };
 eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('Module::Build','0.3601') };
@@ -88,6 +89,7 @@ eval { $v .= pmver('Pod::Weaver::Plugin::Transformer','any version') };
 eval { $v .= pmver('Pod::Weaver::Plugin::WikiDoc','any version') };
 eval { $v .= pmver('Pod::Weaver::PluginBundle::Default','any version') };
 eval { $v .= pmver('Pod::Weaver::Section::Support','1.001') };
+eval { $v .= pmver('Test::DZil','any version') };
 eval { $v .= pmver('Test::More','0.96') };
 
 

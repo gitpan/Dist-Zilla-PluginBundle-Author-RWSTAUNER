@@ -12,7 +12,7 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 BEGIN {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.000';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.100';
 }
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -20,17 +20,17 @@ BEGIN {
 # ABSTRACT: RWSTAUNER's Dist::Zilla config
 
 use Moose;
-use Dist::Zilla 4.102345;
+use Dist::Zilla 4.200005;
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 # Dist::Zilla::Role::DynamicConfig is not necessary: payload is already dynamic
 
 use Dist::Zilla::PluginBundle::Basic (); # use most of the plugins included
 use Dist::Zilla::PluginBundle::Git 1.110500 ();
 # NOTE: A newer TestingMania might duplicate plugins if new tests are added
-use Dist::Zilla::PluginBundle::TestingMania 0.007 ();
-use Dist::Zilla::Plugin::Authority 1.001 ();
+use Dist::Zilla::PluginBundle::TestingMania 0.010 ();
+use Dist::Zilla::Plugin::Authority 1.004 (); # accepts any non-whitespace
 use Dist::Zilla::Plugin::Bugtracker ();
-#use Dist::Zilla::Plugin::CheckExtraTests ();
+use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CheckChangesHasContent 0.003 ();
 use Dist::Zilla::Plugin::DualBuilders 1.001 (); # only runs tests once
 use Dist::Zilla::Plugin::Git::NextVersion ();
@@ -48,7 +48,6 @@ use Dist::Zilla::Plugin::Prepender 1.100960 ();
 use Dist::Zilla::Plugin::Repository 0.16 (); # deprecates github_http
 use Dist::Zilla::Plugin::ReportVersions::Tiny 1.01 ();
 use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
-use Dist::Zilla::Plugin::Test::Pod::LinkCheck ();
 use Dist::Zilla::Plugin::Test::Pod::No404s ();
 use Pod::Weaver::PluginBundle::Author::RWSTAUNER ();
 
@@ -62,13 +61,13 @@ sub _bundle_name {
 sub _default_attributes {
   return {
     auto_prereqs    => [Bool => 1],
+    disable_tests   => [Str  => ''],
     fake_release    => [Bool => $ENV{DZIL_FAKERELEASE}],
     install_command => [Str  => 'cpanm -v -i . -l ~/perl5'],
     is_task         => [Bool => 0],
     releaser        => [Str  => 'UploadToCPAN'],
     skip_plugins    => [Str  => ''],
     skip_prereqs    => [Str  => ''],
-    skip_tests      => [Str  => ''],
     weaver_config   => [Str  => $_[0]->_bundle_name],
     use_git_bundle  => [Bool => 1],
   };
@@ -123,8 +122,8 @@ sub configure {
 
     # exclude any plugins that match 'skip_plugins'
     if( $skip ){
-      # match on name (alias) or plugin class
-      if( $alias =~ $skip || $class =~ $skip ){
+      # match on full name or plugin class (regexp should use \b not \A)
+      if( $name =~ $skip || $class =~ $skip ){
         splice(@$plugins, $i, 1);
         redo;
       }
@@ -176,7 +175,9 @@ sub _add_bundled_plugins {
     [ 'Authority' => { do_metadata => 1 }],
     [
       NextRelease => {
-        format => '%v %{yyyy-MM-dd}d'
+        # w3cdtf
+        time_zone => 'UTC',
+        format => q[%-9v %{yyyy-MM-dd'T'HH:mm:ss'Z'}d],
       }
     ],
     'PkgVersion',
@@ -239,7 +240,6 @@ sub _add_bundled_plugins {
 
   # build system
     qw(
-      ExtraTests
       ExecDir
       ShareDir
       MakeMaker
@@ -256,13 +256,12 @@ sub _add_bundled_plugins {
     # Test::Pod::Spelling::CommonMistakes ?
     qw(
       PodSpellingTests
-      Test::Pod::LinkCheck
       Test::Pod::No404s
     ),
   );
 
   $self->add_bundle(
-    '@TestingMania' => $self->config_slice({ skip_tests => 'skip' })
+    '@TestingMania' => $self->config_slice({ disable_tests => 'disable' })
   );
 
   $self->add_plugins(
@@ -270,18 +269,20 @@ sub _add_bundled_plugins {
     'Manifest',
 
   # before release
-      #CheckExtraTests
     qw(
+      CheckExtraTests
       CheckChangesHasContent
       TestRelease
       ConfirmRelease
     ),
 
-  # release
-    ( $self->fake_release ? 'FakeRelease' : $self->releaser ),
   );
 
-  # TODO: query zilla for phase... if release, announce which releaser we're using
+  # release
+  my $releaser = $self->fake_release ? 'FakeRelease' : $self->releaser;
+  # ignore releaser if it's set to empty string
+  $self->add_plugins($releaser)
+    if $releaser;
 
   # defaults: { tag_format => '%v', push_to => [ qw(origin) ] }
   $self->add_bundle( '@Git' )
@@ -334,8 +335,8 @@ __END__
 =pod
 
 =for :stopwords Randy Stauner RWSTAUNER's PluginBundle PluginBundles DAGOLDEN RJBS dists
-ini arrayrefs cpan testmatrix url annocpan anno bugtracker rt cpants
-kwalitee diff irc mailto metadata placeholders
+ini arrayrefs releaser cpan testmatrix url annocpan anno bugtracker rt
+cpants kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
@@ -343,7 +344,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.000
+version 3.100
 
 =head1 SYNOPSIS
 
@@ -369,16 +370,21 @@ log log_fatal
 Possible options and their default values:
 
   auto_prereqs   = 1  ; enable AutoPrereqs
+  disable_tests  =    ; corresponds to @TestingMania:disable
   fake_release   = 0  ; if true will use FakeRelease instead of 'releaser'
   install_command = cpanm -v -i . -l ~/perl5 (passed to InstallRelease)
   is_task        = 0  ; set to true to use TaskWeaver instead of PodWeaver
   releaser       = UploadToCPAN
   skip_plugins   =    ; default empty; a regexp of plugin names to exclude
   skip_prereqs   =    ; default empty; corresponds to AutoPrereqs:skip
-  skip_tests     =    ; corresponds to @TestingMania:skip
   weaver_config  = @Author::RWSTAUNER
 
 The C<fake_release> option also respects C<$ENV{DZIL_FAKERELEASE}>.
+
+The C<release> option can be set to an alternate releaser plugin
+or to an empty string to disable adding a releaser.
+This can make it easier to include a plugin that requires configuration
+by just ignoring the default releaser and including your own normally.
 
 B<Note> that you can also specify attributes for any of the bundled plugins.
 This works like L<Dist::Zilla::Role::Stash::Plugins> except that the role is
@@ -453,7 +459,9 @@ This bundle is roughly equivalent to:
   [Authority]             ; inject $AUTHORITY into modules
   do_metadata = 1         ; default
   [NextRelease]           ; simplify maintenance of Changes file
-  format = %v %{yyyy-MM-dd}d
+  ; use W3CDTF format for release timestamps (for unambiguous dates)
+  time_zone = UTC
+  format    = %-9v %{yyyy-MM-dd'T'HH:mm:ss'Z'}d
   [PkgVersion]            ; inject $VERSION into modules
   [Prepender]             ; add header to source code files
 
@@ -508,7 +516,6 @@ This bundle is roughly equivalent to:
   ; generate t/ and xt/ tests
   [ReportVersions::Tiny]  ; show module versions used in test reports
   [@TestingMania]         ; Lots of dist tests
-  [Test::Pod::LinkCheck]  ; test Pod links
   [Test::Pod::No404s]     ; test Pod http links
   [PodSpellingTests]      ; spell check POD
 
@@ -519,9 +526,7 @@ This bundle is roughly equivalent to:
   [TestRelease]           ; run tests before releasing
   [ConfirmRelease]        ; are you sure?
   [UploadToCPAN]
-  ; set 'fake_release = 1' to use [FakeRelease] instead
-  ; set 'releaser = AlternatePlugin' to use a different releaser plugin
-  ; 'fake_release' will override the 'releaser' (useful for sub-bundles)
+  ; see CONFIGURATION for alternate Release plugin configuration options
 
   [@Git]                  ; use Git bundle to commit/tag/push after releasing
   [InstallRelease]        ; install the new dist (using 'install_command')

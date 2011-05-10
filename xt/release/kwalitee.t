@@ -1,12 +1,4 @@
 #!perl
-
-BEGIN {
-  unless ($ENV{RELEASE_TESTING}) {
-    require Test::More;
-    Test::More::plan(skip_all => 'these tests are for release candidate testing');
-  }
-}
-
 #
 # This file is part of Dist-Zilla-PluginBundle-Author-RWSTAUNER
 #
@@ -21,3 +13,4 @@ use Test::More;
 eval "use Test::Kwalitee";
 plan skip_all => "Test::Kwalitee required for testing kwalitee"
   if $@;
+

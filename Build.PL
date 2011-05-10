@@ -7,10 +7,12 @@ use Module::Build 0.3601;
 
 my %module_build_args = (
   'build_requires' => {
-    'English' => '0',
+    'Dist::Zilla::Role::Plugin' => '0',
+    'Dist::Zilla::Role::Releaser' => '0',
     'File::Find' => '0',
     'File::Temp' => '0',
     'Module::Build' => '0.3601',
+    'Test::DZil' => '0',
     'Test::More' => '0.96'
   },
   'configure_requires' => {
@@ -21,16 +23,17 @@ my %module_build_args = (
     'Randy Stauner <rwstauner@cpan.org>'
   ],
   'dist_name' => 'Dist-Zilla-PluginBundle-Author-RWSTAUNER',
-  'dist_version' => '3.000',
+  'dist_version' => '3.100',
   'license' => 'perl',
   'module_name' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
   'recommends' => {},
   'recursive_test_files' => 1,
   'requires' => {
-    'Dist::Zilla' => '4.102345',
-    'Dist::Zilla::Plugin::Authority' => '1.001',
+    'Dist::Zilla' => '4.200005',
+    'Dist::Zilla::Plugin::Authority' => '1.004',
     'Dist::Zilla::Plugin::Bugtracker' => '0',
     'Dist::Zilla::Plugin::CheckChangesHasContent' => '0.003',
+    'Dist::Zilla::Plugin::CheckExtraTests' => '0',
     'Dist::Zilla::Plugin::DualBuilders' => '1.001',
     'Dist::Zilla::Plugin::Git::NextVersion' => '0',
     'Dist::Zilla::Plugin::GithubMeta' => '0.10',
@@ -46,11 +49,10 @@ my %module_build_args = (
     'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',
     'Dist::Zilla::Plugin::Repository' => '0.16',
     'Dist::Zilla::Plugin::TaskWeaver' => '0.101620',
-    'Dist::Zilla::Plugin::Test::Pod::LinkCheck' => '0',
     'Dist::Zilla::Plugin::Test::Pod::No404s' => '0',
     'Dist::Zilla::PluginBundle::Basic' => '0',
     'Dist::Zilla::PluginBundle::Git' => '1.110500',
-    'Dist::Zilla::PluginBundle::TestingMania' => '0.007',
+    'Dist::Zilla::PluginBundle::TestingMania' => '0.010',
     'Dist::Zilla::Role::PluginBundle::Easy' => '0',
     'Dist::Zilla::Stash::PodWeaver' => '1.001000',
     'Moose' => '0',

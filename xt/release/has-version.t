@@ -1,12 +1,4 @@
 #!perl
-
-BEGIN {
-  unless ($ENV{RELEASE_TESTING}) {
-    require Test::More;
-    Test::More::plan(skip_all => 'these tests are for release candidate testing');
-  }
-}
-
 #
 # This file is part of Dist-Zilla-PluginBundle-Author-RWSTAUNER
 #
@@ -18,7 +10,7 @@ BEGIN {
 
 use Test::More;
 
-eval "use Test::DistManifest";
-plan skip_all => "Test::DistManifest required for testing the manifest"
+eval "use Test::HasVersion";
+plan skip_all => "Test::HasVersion required for testing version numbers"
   if $@;
-manifest_ok();
+all_pm_version_ok();
