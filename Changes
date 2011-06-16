@@ -1,5 +1,12 @@
 Revision history for Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
+3.101     2011-06-16T02:52:05Z
+
+  - Require Bootstrap::lib plugin so that it's available
+  - Allow cpanm to choose best place to install (install_command)
+  - Remove qw(anno forum kwalitee) from SUPPORT websites
+  - Remove Test::Pod::No404s since most links are generated
+
 3.100     2011-05-10T03:16:24Z
 
   - Use CheckExtraTests instead of ExtraTests to keep xt/ directory

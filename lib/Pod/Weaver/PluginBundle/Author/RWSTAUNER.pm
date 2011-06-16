@@ -12,7 +12,7 @@ use warnings;
 
 package Pod::Weaver::PluginBundle::Author::RWSTAUNER;
 BEGIN {
-  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '3.100';
+  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '3.101';
 }
 BEGIN {
   $Pod::Weaver::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -92,7 +92,15 @@ sub mvp_bundle_config {
     # extra
     # include Support section with various cpan links and github repo
     [ 'Support',     _exp('Support'),
-      { repository_content => '', repository_link => 'both' }
+      {
+        repository_content => '',
+        repository_link => 'both',
+        # NOTE: it may be worth watching the module to see if more are added
+        # removed: 'anno' - anyone use this? ratings or bugs are probably better
+        # removed: 'forum' - does anyone use this?
+        # removed: 'kwalitee' - site has been broken for a while
+        websites => [ qw(search rt ratings testers testmatrix deps) ],
+      }
     ],
 
     # default
@@ -125,7 +133,7 @@ Pod::Weaver::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Pod::Weaver config
 
 =head1 VERSION
 
-version 3.100
+version 3.101
 
 =head1 SYNOPSIS
 
@@ -198,6 +206,7 @@ It is roughly equivalent to:
   [Support]                 ; =head1 SUPPORT (bugs, cpants, git...)
   repository_content =
   repository_link = both
+  websites = search, rt, ratings, testers, testmatrix, deps
 
   [Authors]                 ; [@Default]
   [Legal]                   ; [@Default]

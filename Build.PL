@@ -23,7 +23,7 @@ my %module_build_args = (
     'Randy Stauner <rwstauner@cpan.org>'
   ],
   'dist_name' => 'Dist-Zilla-PluginBundle-Author-RWSTAUNER',
-  'dist_version' => '3.100',
+  'dist_version' => '3.101',
   'license' => 'perl',
   'module_name' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
   'recommends' => {},
@@ -31,6 +31,7 @@ my %module_build_args = (
   'requires' => {
     'Dist::Zilla' => '4.200005',
     'Dist::Zilla::Plugin::Authority' => '1.004',
+    'Dist::Zilla::Plugin::Bootstrap::lib' => '0',
     'Dist::Zilla::Plugin::Bugtracker' => '0',
     'Dist::Zilla::Plugin::CheckChangesHasContent' => '0.003',
     'Dist::Zilla::Plugin::CheckExtraTests' => '0',
@@ -49,7 +50,6 @@ my %module_build_args = (
     'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',
     'Dist::Zilla::Plugin::Repository' => '0.16',
     'Dist::Zilla::Plugin::TaskWeaver' => '0.101620',
-    'Dist::Zilla::Plugin::Test::Pod::No404s' => '0',
     'Dist::Zilla::PluginBundle::Basic' => '0',
     'Dist::Zilla::PluginBundle::Git' => '1.110500',
     'Dist::Zilla::PluginBundle::TestingMania' => '0.010',

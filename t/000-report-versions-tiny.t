@@ -50,6 +50,7 @@ sub pmver {
 
 eval { $v .= pmver('Dist::Zilla','4.200005') };
 eval { $v .= pmver('Dist::Zilla::Plugin::Authority','1.004') };
+eval { $v .= pmver('Dist::Zilla::Plugin::Bootstrap::lib','any version') };
 eval { $v .= pmver('Dist::Zilla::Plugin::Bugtracker','any version') };
 eval { $v .= pmver('Dist::Zilla::Plugin::CheckChangesHasContent','0.003') };
 eval { $v .= pmver('Dist::Zilla::Plugin::CheckExtraTests','any version') };
@@ -68,7 +69,6 @@ eval { $v .= pmver('Dist::Zilla::Plugin::Prepender','1.100960') };
 eval { $v .= pmver('Dist::Zilla::Plugin::ReportVersions::Tiny','1.01') };
 eval { $v .= pmver('Dist::Zilla::Plugin::Repository','0.16') };
 eval { $v .= pmver('Dist::Zilla::Plugin::TaskWeaver','0.101620') };
-eval { $v .= pmver('Dist::Zilla::Plugin::Test::Pod::No404s','any version') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::Basic','any version') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::Git','1.110500') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::TestingMania','0.010') };

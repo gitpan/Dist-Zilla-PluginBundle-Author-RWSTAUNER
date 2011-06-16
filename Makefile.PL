@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-BEGIN { require 5.006; }
+use 5.006;
 
 use ExtUtils::MakeMaker 6.30;
 
@@ -30,6 +30,7 @@ my %WriteMakefileArgs = (
   'PREREQ_PM' => {
     'Dist::Zilla' => '4.200005',
     'Dist::Zilla::Plugin::Authority' => '1.004',
+    'Dist::Zilla::Plugin::Bootstrap::lib' => '0',
     'Dist::Zilla::Plugin::Bugtracker' => '0',
     'Dist::Zilla::Plugin::CheckChangesHasContent' => '0.003',
     'Dist::Zilla::Plugin::CheckExtraTests' => '0',
@@ -48,7 +49,6 @@ my %WriteMakefileArgs = (
     'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',
     'Dist::Zilla::Plugin::Repository' => '0.16',
     'Dist::Zilla::Plugin::TaskWeaver' => '0.101620',
-    'Dist::Zilla::Plugin::Test::Pod::No404s' => '0',
     'Dist::Zilla::PluginBundle::Basic' => '0',
     'Dist::Zilla::PluginBundle::Git' => '1.110500',
     'Dist::Zilla::PluginBundle::TestingMania' => '0.010',
@@ -65,7 +65,7 @@ my %WriteMakefileArgs = (
     'Pod::Weaver::PluginBundle::Default' => '0',
     'Pod::Weaver::Section::Support' => '1.001'
   },
-  'VERSION' => '3.100',
+  'VERSION' => '3.101',
   'test' => {
     'TESTS' => 't/*.t'
   }

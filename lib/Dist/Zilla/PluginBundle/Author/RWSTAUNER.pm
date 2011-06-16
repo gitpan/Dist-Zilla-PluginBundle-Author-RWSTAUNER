@@ -12,7 +12,7 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 BEGIN {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.100';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.101';
 }
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -48,7 +48,7 @@ use Dist::Zilla::Plugin::Prepender 1.100960 ();
 use Dist::Zilla::Plugin::Repository 0.16 (); # deprecates github_http
 use Dist::Zilla::Plugin::ReportVersions::Tiny 1.01 ();
 use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
-use Dist::Zilla::Plugin::Test::Pod::No404s ();
+#use Dist::Zilla::Plugin::Test::Pod::No404s ();
 use Pod::Weaver::PluginBundle::Author::RWSTAUNER ();
 
 # cannot use $self->name for class methods
@@ -63,7 +63,8 @@ sub _default_attributes {
     auto_prereqs    => [Bool => 1],
     disable_tests   => [Str  => ''],
     fake_release    => [Bool => $ENV{DZIL_FAKERELEASE}],
-    install_command => [Str  => 'cpanm -v -i . -l ~/perl5'],
+    # cpanm will choose the best place to install
+    install_command => [Str  => 'cpanm -v -i .'],
     is_task         => [Bool => 0],
     releaser        => [Str  => 'UploadToCPAN'],
     skip_plugins    => [Str  => ''],
@@ -256,8 +257,8 @@ sub _add_bundled_plugins {
     # Test::Pod::Spelling::CommonMistakes ?
     qw(
       PodSpellingTests
-      Test::Pod::No404s
     ),
+      #Test::Pod::No404s # removed since it's rarely useful
   );
 
   $self->add_bundle(
@@ -344,7 +345,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.100
+version 3.101
 
 =head1 SYNOPSIS
 
@@ -372,7 +373,7 @@ Possible options and their default values:
   auto_prereqs   = 1  ; enable AutoPrereqs
   disable_tests  =    ; corresponds to @TestingMania:disable
   fake_release   = 0  ; if true will use FakeRelease instead of 'releaser'
-  install_command = cpanm -v -i . -l ~/perl5 (passed to InstallRelease)
+  install_command = cpanm -v -i . (passed to InstallRelease)
   is_task        = 0  ; set to true to use TaskWeaver instead of PodWeaver
   releaser       = UploadToCPAN
   skip_plugins   =    ; default empty; a regexp of plugin names to exclude
@@ -516,7 +517,6 @@ This bundle is roughly equivalent to:
   ; generate t/ and xt/ tests
   [ReportVersions::Tiny]  ; show module versions used in test reports
   [@TestingMania]         ; Lots of dist tests
-  [Test::Pod::No404s]     ; test Pod http links
   [PodSpellingTests]      ; spell check POD
 
   [Manifest]              ; build MANIFEST file (dzil core [@Basic])
@@ -568,49 +568,49 @@ in addition to those websites please use your favorite search engine to discover
 
 Search CPAN
 
+The default CPAN search engine, useful to view POD in HTML format.
+
 L<http://search.cpan.org/dist/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
 
 =item *
 
 RT: CPAN's Bug Tracker
 
+The RT ( Request Tracker ) website is the default bug/issue tracking system for CPAN.
+
 L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Dist-Zilla-PluginBundle-Author-RWSTAUNER>
-
-=item *
-
-AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
 
 =item *
 
 CPAN Ratings
 
+The CPAN Ratings is a website that allows community ratings and reviews of Perl modules.
+
 L<http://cpanratings.perl.org/d/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
 
 =item *
 
-CPAN Forum
+CPAN Testers
 
-L<http://cpanforum.com/dist/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
+The CPAN Testers is a network of smokers who run automated tests on uploaded CPAN distributions.
 
-=item *
-
-CPANTS Kwalitee
-
-L<http://cpants.perl.org/dist/overview/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
-
-=item *
-
-CPAN Testers Results
-
-L<http://cpantesters.org/distro/D/Dist-Zilla-PluginBundle-Author-RWSTAUNER.html>
+L<http://www.cpantesters.org/distro/D/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
 
 =item *
 
 CPAN Testers Matrix
 
+The CPAN Testers Matrix is a website that provides a visual overview of the test results for a distribution on various Perls/platforms.
+
 L<http://matrix.cpantesters.org/?dist=Dist-Zilla-PluginBundle-Author-RWSTAUNER>
+
+=item *
+
+CPAN Testers Dependencies
+
+The CPAN Testers Dependencies is a website that shows a chart of the test results of all dependencies for a distribution.
+
+L<http://deps.cpantesters.org/?module=Dist::Zilla::PluginBundle::Author::RWSTAUNER>
 
 =back
 
@@ -623,9 +623,9 @@ progress on the request by the system.
 =head2 Source Code
 
 
-L<http://github.com/magnificent-tears/Dist-Zilla-PluginBundle-Author-RWSTAUNER/tree>
+L<http://github.com/magnificent-tears/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
 
-  git clone git://github.com/magnificent-tears/Dist-Zilla-PluginBundle-Author-RWSTAUNER.git
+  git clone http://github.com/magnificent-tears/Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
 =head1 AUTHOR
 

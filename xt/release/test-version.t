@@ -1,4 +1,4 @@
-#!perl
+#!/usr/bin/perl
 #
 # This file is part of Dist-Zilla-PluginBundle-Author-RWSTAUNER
 #
@@ -7,10 +7,14 @@
 # This is free software; you can redistribute it and/or modify it under
 # the same terms as the Perl 5 programming language system itself.
 #
-
+use 5.006;
+use strict;
+use warnings;
 use Test::More;
 
-eval "use Test::HasVersion";
-plan skip_all => "Test::HasVersion required for testing version numbers"
-  if $@;
-all_pm_version_ok();
+eval "use Test::Version 0.04";
+plan skip_all => "Test::Version 0.04 required for testing versions"
+    if $@;
+
+version_all_ok();
+done_testing;
