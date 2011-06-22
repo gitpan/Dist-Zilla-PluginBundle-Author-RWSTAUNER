@@ -12,7 +12,7 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 BEGIN {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.102';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.103';
 }
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -352,7 +352,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.102
+version 3.103
 
 =head1 SYNOPSIS
 

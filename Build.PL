@@ -23,11 +23,11 @@ my %module_build_args = (
     'Randy Stauner <rwstauner@cpan.org>'
   ],
   'dist_name' => 'Dist-Zilla-PluginBundle-Author-RWSTAUNER',
-  'dist_version' => '3.102',
+  'dist_version' => '3.103',
   'license' => 'perl',
   'module_name' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
   'recommends' => {
-    'Dist::Zilla::Plugin::SpellingTests' => '0'
+    'Dist::Zilla::Plugin::PodSpellingTests' => '0'
   },
   'recursive_test_files' => 1,
   'requires' => {
