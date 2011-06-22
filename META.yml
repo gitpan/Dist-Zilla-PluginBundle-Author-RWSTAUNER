@@ -35,10 +35,12 @@ no_index:
 provides:
   Dist::Zilla::PluginBundle::Author::RWSTAUNER:
     file: lib/Dist/Zilla/PluginBundle/Author/RWSTAUNER.pm
-    version: 3.101
+    version: 3.102
   Pod::Weaver::PluginBundle::Author::RWSTAUNER:
     file: lib/Pod/Weaver/PluginBundle/Author/RWSTAUNER.pm
-    version: 3.101
+    version: 3.102
+recommends:
+  Dist::Zilla::Plugin::SpellingTests: 0
 requires:
   Dist::Zilla: 4.200005
   Dist::Zilla::Plugin::Authority: 1.004
@@ -55,7 +57,6 @@ requires:
   Dist::Zilla::Plugin::MinimumPerl: 0.02
   Dist::Zilla::Plugin::NextRelease: 0
   Dist::Zilla::Plugin::PkgVersion: 0
-  Dist::Zilla::Plugin::PodSpellingTests: 0
   Dist::Zilla::Plugin::PodWeaver: 0
   Dist::Zilla::Plugin::Prepender: 1.100960
   Dist::Zilla::Plugin::ReportVersions::Tiny: 1.01
@@ -66,6 +67,7 @@ requires:
   Dist::Zilla::PluginBundle::TestingMania: 0.010
   Dist::Zilla::Role::PluginBundle::Easy: 0
   Dist::Zilla::Stash::PodWeaver: 1.001000
+  List::Util: 0
   Moose: 0
   Pod::Elemental: 0.102360
   Pod::Elemental::Transformer::List: 0
@@ -81,7 +83,7 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-PluginBundle-Author-RWSTAUNER
   homepage: http://github.com/magnificent-tears/Dist-Zilla-PluginBundle-Author-RWSTAUNER
   repository: http://github.com/magnificent-tears/Dist-Zilla-PluginBundle-Author-RWSTAUNER
-version: 3.101
+version: 3.102
 x_Dist_Zilla:
   plugins:
     -
@@ -335,6 +337,14 @@ x_Dist_Zilla:
           phase: runtime
           type: requires
       name: RuntimeRequires
+      version: 4.200007
+    -
+      class: Dist::Zilla::Plugin::Prereqs
+      config:
+        Dist::Zilla::Plugin::Prereqs:
+          phase: runtime
+          type: recommends
+      name: RuntimeRecommends
       version: 4.200007
     -
       class: Dist::Zilla::Plugin::FinderCode

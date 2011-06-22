@@ -43,7 +43,6 @@ my %WriteMakefileArgs = (
     'Dist::Zilla::Plugin::MinimumPerl' => '0.02',
     'Dist::Zilla::Plugin::NextRelease' => '0',
     'Dist::Zilla::Plugin::PkgVersion' => '0',
-    'Dist::Zilla::Plugin::PodSpellingTests' => '0',
     'Dist::Zilla::Plugin::PodWeaver' => '0',
     'Dist::Zilla::Plugin::Prepender' => '1.100960',
     'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',
@@ -54,6 +53,7 @@ my %WriteMakefileArgs = (
     'Dist::Zilla::PluginBundle::TestingMania' => '0.010',
     'Dist::Zilla::Role::PluginBundle::Easy' => '0',
     'Dist::Zilla::Stash::PodWeaver' => '1.001000',
+    'List::Util' => '0',
     'Moose' => '0',
     'Pod::Elemental' => '0.102360',
     'Pod::Elemental::Transformer::List' => '0',
@@ -65,7 +65,7 @@ my %WriteMakefileArgs = (
     'Pod::Weaver::PluginBundle::Default' => '0',
     'Pod::Weaver::Section::Support' => '1.001'
   },
-  'VERSION' => '3.101',
+  'VERSION' => '3.102',
   'test' => {
     'TESTS' => 't/*.t'
   }

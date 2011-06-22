@@ -12,7 +12,7 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 BEGIN {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.101';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.102';
 }
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -20,6 +20,7 @@ BEGIN {
 # ABSTRACT: RWSTAUNER's Dist::Zilla config
 
 use Moose;
+use List::Util qw(first); # core
 use Dist::Zilla 4.200005;
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 # Dist::Zilla::Role::DynamicConfig is not necessary: payload is already dynamic
@@ -42,7 +43,6 @@ use Dist::Zilla::Plugin::MetaProvides::Package 1.11044404 ();
 use Dist::Zilla::Plugin::MinimumPerl 0.02 ();
 use Dist::Zilla::Plugin::NextRelease ();
 use Dist::Zilla::Plugin::PkgVersion ();
-use Dist::Zilla::Plugin::PodSpellingTests ();
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::Prepender 1.100960 ();
 use Dist::Zilla::Plugin::Repository 0.16 (); # deprecates github_http
@@ -50,6 +50,9 @@ use Dist::Zilla::Plugin::ReportVersions::Tiny 1.01 ();
 use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
 #use Dist::Zilla::Plugin::Test::Pod::No404s ();
 use Pod::Weaver::PluginBundle::Author::RWSTAUNER ();
+
+# don't require it in case it won't install somewhere
+my $spelling_tests = eval 'require Dist::Zilla::Plugin::PodSpellingTests';
 
 # cannot use $self->name for class methods
 sub _bundle_name {
@@ -106,7 +109,8 @@ sub configure {
 
   my $dynamic = $self->payload;
   # sneak this config in behind @TestingMania's back
-  $dynamic->{'CompileTests:fake_home'} = 1;
+  $dynamic->{'CompileTests:fake_home'} = 1
+    unless first { /CompileTests\W+fake_home/ } keys %$dynamic;
 
   $self->_add_bundled_plugins;
   my $plugins = $self->plugins;
@@ -118,8 +122,8 @@ sub configure {
     my ($name, $class, $conf) = @$spec;
 
     # ignore the prefix (@Bundle/Name => Name) (DZP::Name => Name)
-    (my $alias   = $name ) =~ s/^${\ $self->name }\///;
-    (my $moniker = $class) =~ s/^Dist::Zilla::Plugin(?:Bundle):://;
+    my ($alias)   = ($name  =~ m#([^/]+)$#);
+    my ($moniker) = ($class =~ m#^(?:Dist::Zilla::Plugin(?:Bundle)::)?(.+)$#);
 
     # exclude any plugins that match 'skip_plugins'
     if( $skip ){
@@ -255,11 +259,14 @@ sub _add_bundled_plugins {
 
   # generated xt/ tests
     # Test::Pod::Spelling::CommonMistakes ?
-    qw(
-      PodSpellingTests
-    ),
       #Test::Pod::No404s # removed since it's rarely useful
   );
+  if ( $spelling_tests ) {
+    $self->add_plugins('PodSpellingTests');
+  }
+  else {
+    $self->log("PodSpellingTests failed to load.  Pleese dunt mayke ani misteaks.\n");
+  }
 
   $self->add_bundle(
     '@TestingMania' => $self->config_slice({ disable_tests => 'disable' })
@@ -345,7 +352,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.101
+version 3.102
 
 =head1 SYNOPSIS
 
@@ -517,7 +524,7 @@ This bundle is roughly equivalent to:
   ; generate t/ and xt/ tests
   [ReportVersions::Tiny]  ; show module versions used in test reports
   [@TestingMania]         ; Lots of dist tests
-  [PodSpellingTests]      ; spell check POD
+  [PodSpellingTests]      ; spell check POD (if installed)
 
   [Manifest]              ; build MANIFEST file (dzil core [@Basic])
 

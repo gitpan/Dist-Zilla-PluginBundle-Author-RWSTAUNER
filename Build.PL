@@ -23,10 +23,12 @@ my %module_build_args = (
     'Randy Stauner <rwstauner@cpan.org>'
   ],
   'dist_name' => 'Dist-Zilla-PluginBundle-Author-RWSTAUNER',
-  'dist_version' => '3.101',
+  'dist_version' => '3.102',
   'license' => 'perl',
   'module_name' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
-  'recommends' => {},
+  'recommends' => {
+    'Dist::Zilla::Plugin::SpellingTests' => '0'
+  },
   'recursive_test_files' => 1,
   'requires' => {
     'Dist::Zilla' => '4.200005',
@@ -44,7 +46,6 @@ my %module_build_args = (
     'Dist::Zilla::Plugin::MinimumPerl' => '0.02',
     'Dist::Zilla::Plugin::NextRelease' => '0',
     'Dist::Zilla::Plugin::PkgVersion' => '0',
-    'Dist::Zilla::Plugin::PodSpellingTests' => '0',
     'Dist::Zilla::Plugin::PodWeaver' => '0',
     'Dist::Zilla::Plugin::Prepender' => '1.100960',
     'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',
@@ -55,6 +56,7 @@ my %module_build_args = (
     'Dist::Zilla::PluginBundle::TestingMania' => '0.010',
     'Dist::Zilla::Role::PluginBundle::Easy' => '0',
     'Dist::Zilla::Stash::PodWeaver' => '1.001000',
+    'List::Util' => '0',
     'Moose' => '0',
     'Pod::Elemental' => '0.102360',
     'Pod::Elemental::Transformer::List' => '0',

@@ -1,5 +1,16 @@
 Revision history for Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
+3.102     2011-06-22T03:01:05Z
+
+  [Prereqs]
+  - Dist::Zilla::Plugin::SpellingTests no longer a hard requirement
+
+  [Fixes]
+  - Don't overwrite CompileTests.fake_home with default if it's set in config
+  - Ignore any number of Bundle prefixes from plugin names
+    (to allow dynamic configuration of plugins added by bundles)
+  - Improvements to tests
+
 3.101     2011-06-16T02:52:05Z
 
   - Require Bootstrap::lib plugin so that it's available
