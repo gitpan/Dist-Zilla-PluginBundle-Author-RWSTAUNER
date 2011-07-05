@@ -12,7 +12,7 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 BEGIN {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.103';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.104';
 }
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -123,7 +123,7 @@ sub configure {
 
     # ignore the prefix (@Bundle/Name => Name) (DZP::Name => Name)
     my ($alias)   = ($name  =~ m#([^/]+)$#);
-    my ($moniker) = ($class =~ m#^(?:Dist::Zilla::Plugin(?:Bundle)::)?(.+)$#);
+    my ($moniker) = ($class =~ m#^(?:Dist::Zilla::Plugin(?:Bundle)?::)?(.+)$#);
 
     # exclude any plugins that match 'skip_plugins'
     if( $skip ){
@@ -150,6 +150,13 @@ sub configure {
       $conf->{$attr} = $val;
     }
   };
+  if ( $ENV{DZIL_BUNDLE_DEBUG} ) {
+    eval {
+      require YAML::Tiny; # dzil requires this
+      $self->log( YAML::Tiny::Dump( $self->plugins ) );
+    };
+    warn $@ if $@;
+  }
 }
 
 sub _add_bundled_plugins {
@@ -175,6 +182,8 @@ sub _add_bundled_plugins {
     [ PruneFiles => 'PruneBuilderFiles'  => { match => '^(dist.ini)$' } ],
     # this is just for github
     [ PruneFiles => 'PruneRepoMetaFiles' => { match => '^(README.pod)$' } ],
+    # Devel::Cover db does not need to be packaged with distribution
+    [ PruneFiles => 'PruneDevelCoverDatabase' => { match => '^(cover_db)$' } ],
 
   # munge files
     [ 'Authority' => { do_metadata => 1 }],
@@ -235,13 +244,14 @@ sub _add_bundled_plugins {
       MetaJSON
     ),
 
-    [
-      Prereqs => 'TestMoreWithSubtests' => {
-        -phase => 'test',
-        -type  => 'requires',
-        'Test::More' => '0.96'
-      }
-    ],
+# I prefer to be explicit about required versions when loading, but this is a handy example:
+#    [
+#      Prereqs => 'TestMoreWithSubtests' => {
+#        -phase => 'test',
+#        -type  => 'requires',
+#        'Test::More' => '0.96'
+#      }
+#    ],
 
   # build system
     qw(
@@ -352,7 +362,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.103
+version 3.104
 
 =head1 SYNOPSIS
 

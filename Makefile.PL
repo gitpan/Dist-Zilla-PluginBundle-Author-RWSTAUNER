@@ -63,9 +63,10 @@ my %WriteMakefileArgs = (
     'Pod::Weaver::Plugin::Transformer' => '0',
     'Pod::Weaver::Plugin::WikiDoc' => '0',
     'Pod::Weaver::PluginBundle::Default' => '0',
-    'Pod::Weaver::Section::Support' => '1.001'
+    'Pod::Weaver::Section::Support' => '1.001',
+    'YAML::Tiny' => '0'
   },
-  'VERSION' => '3.103',
+  'VERSION' => '3.104',
   'test' => {
     'TESTS' => 't/*.t'
   }

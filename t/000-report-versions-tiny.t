@@ -92,6 +92,7 @@ eval { $v .= pmver('Pod::Weaver::PluginBundle::Default','any version') };
 eval { $v .= pmver('Pod::Weaver::Section::Support','1.001') };
 eval { $v .= pmver('Test::DZil','any version') };
 eval { $v .= pmver('Test::More','0.96') };
+eval { $v .= pmver('YAML::Tiny','any version') };
 
 
 

@@ -23,7 +23,7 @@ my %module_build_args = (
     'Randy Stauner <rwstauner@cpan.org>'
   ],
   'dist_name' => 'Dist-Zilla-PluginBundle-Author-RWSTAUNER',
-  'dist_version' => '3.103',
+  'dist_version' => '3.104',
   'license' => 'perl',
   'module_name' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
   'recommends' => {
@@ -67,6 +67,7 @@ my %module_build_args = (
     'Pod::Weaver::Plugin::WikiDoc' => '0',
     'Pod::Weaver::PluginBundle::Default' => '0',
     'Pod::Weaver::Section::Support' => '1.001',
+    'YAML::Tiny' => '0',
     'perl' => '5.006'
   },
   'script_files' => []
