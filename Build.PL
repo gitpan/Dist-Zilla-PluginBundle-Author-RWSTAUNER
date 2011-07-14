@@ -23,7 +23,7 @@ my %module_build_args = (
     'Randy Stauner <rwstauner@cpan.org>'
   ],
   'dist_name' => 'Dist-Zilla-PluginBundle-Author-RWSTAUNER',
-  'dist_version' => '3.104',
+  'dist_version' => '3.105',
   'license' => 'perl',
   'module_name' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
   'recommends' => {

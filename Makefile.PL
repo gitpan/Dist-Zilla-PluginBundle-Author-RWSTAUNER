@@ -66,7 +66,7 @@ my %WriteMakefileArgs = (
     'Pod::Weaver::Section::Support' => '1.001',
     'YAML::Tiny' => '0'
   },
-  'VERSION' => '3.104',
+  'VERSION' => '3.105',
   'test' => {
     'TESTS' => 't/*.t'
   }

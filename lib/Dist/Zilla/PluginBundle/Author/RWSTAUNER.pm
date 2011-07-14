@@ -12,7 +12,7 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 BEGIN {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.104';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.105';
 }
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -362,7 +362,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.104
+version 3.105
 
 =head1 SYNOPSIS
 
@@ -640,9 +640,9 @@ progress on the request by the system.
 =head2 Source Code
 
 
-L<http://github.com/magnificent-tears/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
+L<http://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
 
-  git clone http://github.com/magnificent-tears/Dist-Zilla-PluginBundle-Author-RWSTAUNER
+  git clone http://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
 =head1 AUTHOR
 
