@@ -16,6 +16,7 @@ t/000-report-versions-tiny.t
 t/configure.t
 t/lib/Dist/Zilla/Plugin/No_Op_Releaser.pm
 xt/author/critic.t
+xt/author/pod-spell.t
 xt/release/cpan-changes.t
 xt/release/dist-manifest.t
 xt/release/distmeta.t
@@ -27,7 +28,6 @@ xt/release/mojibake.t
 xt/release/no-tabs.t
 xt/release/pod-coverage.t
 xt/release/pod-linkcheck.t
-xt/release/pod-spell.t
 xt/release/pod-syntax.t
 xt/release/portability.t
 xt/release/test-version.t

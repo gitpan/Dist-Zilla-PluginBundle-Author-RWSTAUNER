@@ -29,7 +29,7 @@ my %WriteMakefileArgs = (
   'NAME' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
   'PREREQ_PM' => {
     'Dist::Zilla' => '4.200005',
-    'Dist::Zilla::Plugin::Authority' => '1.004',
+    'Dist::Zilla::Plugin::Authority' => '1.005',
     'Dist::Zilla::Plugin::Bootstrap::lib' => '0',
     'Dist::Zilla::Plugin::Bugtracker' => '0',
     'Dist::Zilla::Plugin::CheckChangesHasContent' => '0.003',
@@ -42,7 +42,7 @@ my %WriteMakefileArgs = (
     'Dist::Zilla::Plugin::MetaProvides::Package' => '1.11044404',
     'Dist::Zilla::Plugin::MinimumPerl' => '0.02',
     'Dist::Zilla::Plugin::NextRelease' => '0',
-    'Dist::Zilla::Plugin::PkgVersion' => '0',
+    'Dist::Zilla::Plugin::OurPkgVersion' => '0.002',
     'Dist::Zilla::Plugin::PodWeaver' => '0',
     'Dist::Zilla::Plugin::Prepender' => '1.100960',
     'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',
@@ -66,7 +66,7 @@ my %WriteMakefileArgs = (
     'Pod::Weaver::Section::Support' => '1.001',
     'YAML::Tiny' => '0'
   },
-  'VERSION' => '3.105',
+  'VERSION' => '3.106',
   'test' => {
     'TESTS' => 't/*.t'
   }

@@ -23,16 +23,17 @@ my %module_build_args = (
     'Randy Stauner <rwstauner@cpan.org>'
   ],
   'dist_name' => 'Dist-Zilla-PluginBundle-Author-RWSTAUNER',
-  'dist_version' => '3.105',
+  'dist_version' => '3.106',
   'license' => 'perl',
   'module_name' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
   'recommends' => {
-    'Dist::Zilla::Plugin::PodSpellingTests' => '0'
+    'Dist::Zilla::Plugin::Run' => '0.008',
+    'Dist::Zilla::Plugin::Test::PodSpelling' => '2'
   },
   'recursive_test_files' => 1,
   'requires' => {
     'Dist::Zilla' => '4.200005',
-    'Dist::Zilla::Plugin::Authority' => '1.004',
+    'Dist::Zilla::Plugin::Authority' => '1.005',
     'Dist::Zilla::Plugin::Bootstrap::lib' => '0',
     'Dist::Zilla::Plugin::Bugtracker' => '0',
     'Dist::Zilla::Plugin::CheckChangesHasContent' => '0.003',
@@ -45,7 +46,7 @@ my %module_build_args = (
     'Dist::Zilla::Plugin::MetaProvides::Package' => '1.11044404',
     'Dist::Zilla::Plugin::MinimumPerl' => '0.02',
     'Dist::Zilla::Plugin::NextRelease' => '0',
-    'Dist::Zilla::Plugin::PkgVersion' => '0',
+    'Dist::Zilla::Plugin::OurPkgVersion' => '0.002',
     'Dist::Zilla::Plugin::PodWeaver' => '0',
     'Dist::Zilla::Plugin::Prepender' => '1.100960',
     'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',

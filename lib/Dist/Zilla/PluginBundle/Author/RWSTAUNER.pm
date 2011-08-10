@@ -11,13 +11,9 @@ use strict;
 use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
-BEGIN {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.105';
-}
-BEGIN {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
-}
 # ABSTRACT: RWSTAUNER's Dist::Zilla config
+our $VERSION = '3.106'; # VERSION
+our $AUTHORITY = 'cpan:RWSTAUNER'; # AUTHORITY
 
 use Moose;
 use List::Util qw(first); # core
@@ -29,7 +25,7 @@ use Dist::Zilla::PluginBundle::Basic (); # use most of the plugins included
 use Dist::Zilla::PluginBundle::Git 1.110500 ();
 # NOTE: A newer TestingMania might duplicate plugins if new tests are added
 use Dist::Zilla::PluginBundle::TestingMania 0.010 ();
-use Dist::Zilla::Plugin::Authority 1.004 (); # accepts any non-whitespace
+use Dist::Zilla::Plugin::Authority 1.005 (); # accepts any non-whitespace + locate_comment
 use Dist::Zilla::Plugin::Bugtracker ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CheckChangesHasContent 0.003 ();
@@ -42,7 +38,7 @@ use Dist::Zilla::Plugin::MetaNoIndex 1.101130 ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.11044404 ();
 use Dist::Zilla::Plugin::MinimumPerl 0.02 ();
 use Dist::Zilla::Plugin::NextRelease ();
-use Dist::Zilla::Plugin::PkgVersion ();
+use Dist::Zilla::Plugin::OurPkgVersion 0.002 ();
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::Prepender 1.100960 ();
 use Dist::Zilla::Plugin::Repository 0.16 (); # deprecates github_http
@@ -52,7 +48,7 @@ use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
 use Pod::Weaver::PluginBundle::Author::RWSTAUNER ();
 
 # don't require it in case it won't install somewhere
-my $spelling_tests = eval 'require Dist::Zilla::Plugin::PodSpellingTests';
+my $spelling_tests = eval 'require Dist::Zilla::Plugin::Test::PodSpelling';
 
 # cannot use $self->name for class methods
 sub _bundle_name {
@@ -179,14 +175,20 @@ sub _add_bundled_plugins {
       ManifestSkip
     ),
     # not necessary in the released distribution
-    [ PruneFiles => 'PruneBuilderFiles'  => { match => '^(dist.ini)$' } ],
+    [ PruneFiles => 'PruneBuilderFiles'  => { match => '^(dist|weaver).ini$' } ],
     # this is just for github
     [ PruneFiles => 'PruneRepoMetaFiles' => { match => '^(README.pod)$' } ],
     # Devel::Cover db does not need to be packaged with distribution
     [ PruneFiles => 'PruneDevelCoverDatabase' => { match => '^(cover_db)$' } ],
 
   # munge files
-    [ 'Authority' => { do_metadata => 1 }],
+    [
+      Authority => {
+        do_munging     => 1,
+        do_metadata    => 1,
+        locate_comment => 1,
+      }
+    ],
     [
       NextRelease => {
         # w3cdtf
@@ -194,10 +196,11 @@ sub _add_bundled_plugins {
         format => q[%-9v %{yyyy-MM-dd'T'HH:mm:ss'Z'}d],
       }
     ],
-    'PkgVersion',
+    'OurPkgVersion',
     'Prepender',
     ( $self->is_task
       ?  'TaskWeaver'
+      # TODO: detect weaver.ini and skip 'config_plugin'?
       : [ 'PodWeaver' => { config_plugin => $self->weaver_config } ]
     ),
 
@@ -272,10 +275,10 @@ sub _add_bundled_plugins {
       #Test::Pod::No404s # removed since it's rarely useful
   );
   if ( $spelling_tests ) {
-    $self->add_plugins('PodSpellingTests');
+    $self->add_plugins('Test::PodSpelling');
   }
   else {
-    $self->log("PodSpellingTests failed to load.  Pleese dunt mayke ani misteaks.\n");
+    $self->log("Test::PodSpelling Plugin failed to load.  Pleese dunt mayke ani misteaks.\n");
   }
 
   $self->add_bundle(
@@ -352,9 +355,9 @@ no Moose;
 __END__
 =pod
 
-=for :stopwords Randy Stauner RWSTAUNER's PluginBundle PluginBundles DAGOLDEN RJBS dists
-ini arrayrefs releaser cpan testmatrix url annocpan anno bugtracker rt
-cpants kwalitee diff irc mailto metadata placeholders
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle PluginBundles
+DAGOLDEN RJBS dists ini arrayrefs releaser cpan testmatrix url annocpan
+anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders
 
 =head1 NAME
 
@@ -362,7 +365,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.105
+version 3.106
 
 =head1 SYNOPSIS
 
@@ -480,7 +483,7 @@ This bundle is roughly equivalent to:
   ; use W3CDTF format for release timestamps (for unambiguous dates)
   time_zone = UTC
   format    = %-9v %{yyyy-MM-dd'T'HH:mm:ss'Z'}d
-  [PkgVersion]            ; inject $VERSION into modules
+  [OurPkgVersion]         ; inject $VERSION at '# VERSION' comments
   [Prepender]             ; add header to source code files
 
   [PodWeaver]             ; munge POD in all modules
@@ -534,7 +537,7 @@ This bundle is roughly equivalent to:
   ; generate t/ and xt/ tests
   [ReportVersions::Tiny]  ; show module versions used in test reports
   [@TestingMania]         ; Lots of dist tests
-  [PodSpellingTests]      ; spell check POD (if installed)
+  [Test::PodSpelling]     ; spell check POD (if installed)
 
   [Manifest]              ; build MANIFEST file (dzil core [@Basic])
 
@@ -640,9 +643,9 @@ progress on the request by the system.
 =head2 Source Code
 
 
-L<http://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
+L<https://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
 
-  git clone http://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER
+  git clone https://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
 =head1 AUTHOR
 

@@ -11,13 +11,9 @@ use strict;
 use warnings;
 
 package Pod::Weaver::PluginBundle::Author::RWSTAUNER;
-BEGIN {
-  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '3.105';
-}
-BEGIN {
-  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
-}
 # ABSTRACT: RWSTAUNER's Pod::Weaver config
+our $VERSION = '3.106'; # VERSION
+our $AUTHORITY = 'cpan:RWSTAUNER'; # AUTHORITY
 
 use Pod::Weaver 3.101632 ();
 use Pod::Weaver::PluginBundle::Default ();
@@ -32,9 +28,9 @@ use Pod::Weaver::Config::Assembler;
 sub _exp { Pod::Weaver::Config::Assembler->expand_package($_[0]) }
 
 sub _plain {
-  my ($plug) = @_;
+  my ($plug, $arg) = (@_, {});
   (my $name = $plug) =~ s/^\W//;
-  return [ $name, _exp($plug), {} ];
+  return [ $name, _exp($plug), { %$arg } ];
 }
 
 sub _bundle_name {
@@ -103,13 +99,19 @@ sub mvp_bundle_config {
       }
     ],
 
+    [ 'Acknowledgements', _exp('Generic'), {header => 'ACKNOWLEDGEMENTS'} ],
+
     # default
     _plain('Authors'),
     _plain('Legal'),
 
     # plugins
     [ 'List',        _exp('-Transformer'), { 'transformer' => 'List' } ],
-    _plain('-StopWords'),
+
+    # my dictionary doesn't like that extra 'E' but it looks funny without it
+    _plain('-StopWords', {
+      include => 'ACKNOWLEDGEMENTS'
+    }),
   );
 
   # prepend bundle name to each plugin name
@@ -125,7 +127,7 @@ sub mvp_bundle_config {
 __END__
 =pod
 
-=for :stopwords Randy Stauner RWSTAUNER's PluginBundle WikiDoc
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle WikiDoc
 
 =head1 NAME
 
@@ -133,7 +135,7 @@ Pod::Weaver::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Pod::Weaver config
 
 =head1 VERSION
 
-version 3.105
+version 3.106
 
 =head1 SYNOPSIS
 
