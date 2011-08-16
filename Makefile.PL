@@ -44,9 +44,10 @@ my %WriteMakefileArgs = (
     'Dist::Zilla::Plugin::NextRelease' => '0',
     'Dist::Zilla::Plugin::OurPkgVersion' => '0.002',
     'Dist::Zilla::Plugin::PodWeaver' => '0',
-    'Dist::Zilla::Plugin::Prepender' => '1.100960',
+    'Dist::Zilla::Plugin::Prepender' => '1.112280',
     'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',
     'Dist::Zilla::Plugin::Repository' => '0.16',
+    'Dist::Zilla::Plugin::Run' => '0.008',
     'Dist::Zilla::Plugin::TaskWeaver' => '0.101620',
     'Dist::Zilla::PluginBundle::Basic' => '0',
     'Dist::Zilla::PluginBundle::Git' => '1.110500',
@@ -66,7 +67,7 @@ my %WriteMakefileArgs = (
     'Pod::Weaver::Section::Support' => '1.001',
     'YAML::Tiny' => '0'
   },
-  'VERSION' => '3.106',
+  'VERSION' => '3.107',
   'test' => {
     'TESTS' => 't/*.t'
   }

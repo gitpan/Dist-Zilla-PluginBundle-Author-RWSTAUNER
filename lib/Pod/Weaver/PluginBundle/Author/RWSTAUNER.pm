@@ -11,9 +11,13 @@ use strict;
 use warnings;
 
 package Pod::Weaver::PluginBundle::Author::RWSTAUNER;
+{
+  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '3.107';
+}
+BEGIN {
+  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
+}
 # ABSTRACT: RWSTAUNER's Pod::Weaver config
-our $VERSION = '3.106'; # VERSION
-our $AUTHORITY = 'cpan:RWSTAUNER'; # AUTHORITY
 
 use Pod::Weaver 3.101632 ();
 use Pod::Weaver::PluginBundle::Default ();
@@ -135,7 +139,7 @@ Pod::Weaver::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Pod::Weaver config
 
 =head1 VERSION
 
-version 3.106
+version 3.107
 
 =head1 SYNOPSIS
 

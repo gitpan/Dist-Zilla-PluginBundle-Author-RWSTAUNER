@@ -23,11 +23,10 @@ my %module_build_args = (
     'Randy Stauner <rwstauner@cpan.org>'
   ],
   'dist_name' => 'Dist-Zilla-PluginBundle-Author-RWSTAUNER',
-  'dist_version' => '3.106',
+  'dist_version' => '3.107',
   'license' => 'perl',
   'module_name' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
   'recommends' => {
-    'Dist::Zilla::Plugin::Run' => '0.008',
     'Dist::Zilla::Plugin::Test::PodSpelling' => '2'
   },
   'recursive_test_files' => 1,
@@ -48,9 +47,10 @@ my %module_build_args = (
     'Dist::Zilla::Plugin::NextRelease' => '0',
     'Dist::Zilla::Plugin::OurPkgVersion' => '0.002',
     'Dist::Zilla::Plugin::PodWeaver' => '0',
-    'Dist::Zilla::Plugin::Prepender' => '1.100960',
+    'Dist::Zilla::Plugin::Prepender' => '1.112280',
     'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',
     'Dist::Zilla::Plugin::Repository' => '0.16',
+    'Dist::Zilla::Plugin::Run' => '0.008',
     'Dist::Zilla::Plugin::TaskWeaver' => '0.101620',
     'Dist::Zilla::PluginBundle::Basic' => '0',
     'Dist::Zilla::PluginBundle::Git' => '1.110500',
