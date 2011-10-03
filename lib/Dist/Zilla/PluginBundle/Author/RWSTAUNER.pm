@@ -12,7 +12,7 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.107';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.108';
 }
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -28,7 +28,7 @@ with 'Dist::Zilla::Role::PluginBundle::Easy';
 use Dist::Zilla::PluginBundle::Basic (); # use most of the plugins included
 use Dist::Zilla::PluginBundle::Git 1.110500 ();
 # NOTE: A newer TestingMania might duplicate plugins if new tests are added
-use Dist::Zilla::PluginBundle::TestingMania 0.010 ();
+use Dist::Zilla::PluginBundle::TestingMania 0.014 ();
 use Dist::Zilla::Plugin::Authority 1.005 (); # accepts any non-whitespace + locate_comment
 use Dist::Zilla::Plugin::Bugtracker ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
@@ -42,7 +42,8 @@ use Dist::Zilla::Plugin::MetaNoIndex 1.101130 ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.11044404 ();
 use Dist::Zilla::Plugin::MinimumPerl 0.02 ();
 use Dist::Zilla::Plugin::NextRelease ();
-use Dist::Zilla::Plugin::OurPkgVersion 0.002 ();
+use Dist::Zilla::Plugin::PkgVersion ();
+#use Dist::Zilla::Plugin::OurPkgVersion 0.002 ();
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::Prepender 1.112280 ();
 use Dist::Zilla::Plugin::Repository 0.16 (); # deprecates github_http
@@ -54,6 +55,12 @@ use Pod::Weaver::PluginBundle::Author::RWSTAUNER ();
 # don't require it in case it won't install somewhere
 my $spelling_tests = eval 'require Dist::Zilla::Plugin::Test::PodSpelling';
 
+# available builders
+my %builders = (
+  eumm => 'MakeMaker',
+  mb   => 'ModuleBuild',
+);
+
 # cannot use $self->name for class methods
 sub _bundle_name {
   my $class = @_ ? ref $_[0] || $_[0] : __PACKAGE__;
@@ -62,6 +69,7 @@ sub _bundle_name {
 
 # TODO: consider an option for using ReportPhase
 sub _default_attributes {
+  use Moose::Util::TypeConstraints 1.01;
   return {
     auto_prereqs    => [Bool => 1],
     disable_tests   => [Str  => ''],
@@ -75,6 +83,7 @@ sub _default_attributes {
     skip_prereqs    => [Str  => ''],
     weaver_config   => [Str  => $_[0]->_bundle_name],
     use_git_bundle  => [Bool => 1],
+    builder         => [enum( [ both => keys %builders ] ) => 'eumm'],
   };
 }
 
@@ -110,8 +119,8 @@ sub configure {
 
   my $dynamic = $self->payload;
   # sneak this config in behind @TestingMania's back
-  $dynamic->{'CompileTests:fake_home'} = 1
-    unless first { /CompileTests\W+fake_home/ } keys %$dynamic;
+  $dynamic->{'Test::Compile:fake_home'} = 1
+    unless first { /Test::Compile\W+fake_home/ } keys %$dynamic;
 
   $self->_add_bundled_plugins;
   my $plugins = $self->plugins;
@@ -179,12 +188,10 @@ sub _add_bundled_plugins {
       PruneCruft
       ManifestSkip
     ),
-    # not necessary in the released distribution
-    [ PruneFiles => 'PruneBuilderFiles'  => { match => '^(dist|weaver).ini$' } ],
     # this is just for github
     [ PruneFiles => 'PruneRepoMetaFiles' => { match => '^(README.pod)$' } ],
     # Devel::Cover db does not need to be packaged with distribution
-    [ PruneFiles => 'PruneDevelCoverDatabase' => { match => '^(cover_db)$' } ],
+    [ PruneFiles => 'PruneDevelCoverDatabase' => { match => '^(cover_db/.+)' } ],
 
   # munge files
     [
@@ -270,11 +277,18 @@ sub _add_bundled_plugins {
     qw(
       ExecDir
       ShareDir
-      MakeMaker
-      ModuleBuild
-      DualBuilders
     ),
+  );
 
+  {
+    my @builders = $self->builder eq 'both'
+      ? (values %builders, 'DualBuilders')
+      : ($builders{ $self->builder });
+    $self->log("Including builders: @builders\n");
+    $self->add_plugins(@builders);
+  }
+
+  $self->add_plugins(
   # generated t/ tests
     qw(
       ReportVersions::Tiny
@@ -369,13 +383,15 @@ __END__
 DAGOLDEN RJBS dists ini arrayrefs releaser cpan testmatrix url annocpan
 anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders
 
+=encoding utf-8
+
 =head1 NAME
 
 Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.107
+version 3.108
 
 =head1 SYNOPSIS
 
@@ -401,6 +417,7 @@ log log_fatal
 Possible options and their default values:
 
   auto_prereqs   = 1  ; enable AutoPrereqs
+  builder        = eumm ; or 'mb' or 'both'
   disable_tests  =    ; corresponds to @TestingMania:disable
   fake_release   = 0  ; if true will use FakeRelease instead of 'releaser'
   install_command = cpanm -v -i . (passed to InstallRelease)
@@ -443,7 +460,7 @@ as it is included by the Bundle.
 String (or boolean) attributes will overwrite any in the Bundle:
 
   [@Author::RWSTAUNER]
-  CompileTests.fake_home = 0
+  Test::Compile.fake_home = 0
 
 Arrayref attributes will be appended to any in the bundle:
 
@@ -541,9 +558,9 @@ This bundle is roughly equivalent to:
   [ExecDir]               ; include 'bin/*' as executables
   [ShareDir]              ; include 'share/' for File::ShareDir
 
-  [MakeMaker]             ; create Makefile.PL
-  [ModuleBuild]           ; create Build.PL
-  [DualBuilders]          ; only require one of the above two (prefer 'build')
+  [MakeMaker]             ; create Makefile.PL (if builder == 'eumm' (default))
+  ; [ModuleBuild]         ; create Build.PL (if builder == 'mb')
+  ; [DualBuilders]        ; only require one of the above two (prefer 'build') (if both)
 
   ; generate t/ and xt/ tests
   [ReportVersions::Tiny]  ; show module versions used in test reports

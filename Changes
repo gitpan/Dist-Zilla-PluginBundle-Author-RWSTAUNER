@@ -1,5 +1,19 @@
 Revision history for Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
+3.108     2011-10-03T13:59:32Z
+
+  [Prereqs]
+  - Pod::Weaver::Plugin::Encoding
+  - By default just use MakeMaker; set 'builder' to 'mb' or 'both'
+    for ModuleBuild and/or DualBuilders
+  - Bump @TestingMania required version to 0.14
+  - Don't require OurPkgVersion
+
+  [Fixes]
+  - s/CompileTests/Test::Compile/g
+  - Stop pruning dist.ini; it should be a familiar file for people
+  - Fix regexp to actually prune cover_db/
+
 3.107     2011-08-16T23:01:28Z
 
   [Changes]

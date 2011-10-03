@@ -12,7 +12,7 @@ use warnings;
 
 package Pod::Weaver::PluginBundle::Author::RWSTAUNER;
 {
-  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '3.107';
+  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '3.108';
 }
 BEGIN {
   $Pod::Weaver::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -51,6 +51,7 @@ sub mvp_bundle_config {
 
   push @plugins, (
     # plugin
+    _plain('-Encoding'),
     _plain('-WikiDoc'),
     # default
     _plain('@CorePrep'),
@@ -133,13 +134,15 @@ __END__
 
 =for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle WikiDoc
 
+=encoding utf-8
+
 =head1 NAME
 
 Pod::Weaver::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Pod::Weaver config
 
 =head1 VERSION
 
-version 3.107
+version 3.108
 
 =head1 SYNOPSIS
 
@@ -182,6 +185,7 @@ Generates and collects stopwords
 
 It is roughly equivalent to:
 
+  [Encoding]                ; prepend '=encoding utf-8' automatically
   [WikiDoc]                 ; transform wikidoc sections to POD
   [@CorePrep]               ; [@Default]
 

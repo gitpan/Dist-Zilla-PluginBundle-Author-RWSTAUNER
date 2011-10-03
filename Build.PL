@@ -6,72 +6,75 @@ use Module::Build 0.3601;
 
 
 my %module_build_args = (
-  'build_requires' => {
-    'Dist::Zilla::Role::Plugin' => '0',
-    'Dist::Zilla::Role::Releaser' => '0',
-    'File::Find' => '0',
-    'File::Temp' => '0',
-    'Module::Build' => '0.3601',
-    'Test::DZil' => '0',
-    'Test::More' => '0.96'
+  "build_requires" => {
+    "Dist::Zilla::Role::Plugin" => 0,
+    "Dist::Zilla::Role::Releaser" => 0,
+    "File::Find" => 0,
+    "File::Temp" => 0,
+    "Module::Build" => "0.3601",
+    "Test::DZil" => 0,
+    "Test::More" => "0.96"
   },
-  'configure_requires' => {
-    'Module::Build' => '0.3601'
+  "configure_requires" => {
+    "Module::Build" => "0.3601"
   },
-  'dist_abstract' => 'RWSTAUNER\'s Dist::Zilla config',
-  'dist_author' => [
-    'Randy Stauner <rwstauner@cpan.org>'
+  "dist_abstract" => "RWSTAUNER's Dist::Zilla config",
+  "dist_author" => [
+    "Randy Stauner <rwstauner\@cpan.org>"
   ],
-  'dist_name' => 'Dist-Zilla-PluginBundle-Author-RWSTAUNER',
-  'dist_version' => '3.107',
-  'license' => 'perl',
-  'module_name' => 'Dist::Zilla::PluginBundle::Author::RWSTAUNER',
-  'recommends' => {
-    'Dist::Zilla::Plugin::Test::PodSpelling' => '2'
+  "dist_name" => "Dist-Zilla-PluginBundle-Author-RWSTAUNER",
+  "dist_version" => "3.108",
+  "license" => "perl",
+  "module_name" => "Dist::Zilla::PluginBundle::Author::RWSTAUNER",
+  "recommends" => {
+    "Dist::Zilla::Plugin::Test::PodSpelling" => 2
   },
-  'recursive_test_files' => 1,
-  'requires' => {
-    'Dist::Zilla' => '4.200005',
-    'Dist::Zilla::Plugin::Authority' => '1.005',
-    'Dist::Zilla::Plugin::Bootstrap::lib' => '0',
-    'Dist::Zilla::Plugin::Bugtracker' => '0',
-    'Dist::Zilla::Plugin::CheckChangesHasContent' => '0.003',
-    'Dist::Zilla::Plugin::CheckExtraTests' => '0',
-    'Dist::Zilla::Plugin::DualBuilders' => '1.001',
-    'Dist::Zilla::Plugin::Git::NextVersion' => '0',
-    'Dist::Zilla::Plugin::GithubMeta' => '0.10',
-    'Dist::Zilla::Plugin::InstallRelease' => '0.006',
-    'Dist::Zilla::Plugin::MetaNoIndex' => '1.101130',
-    'Dist::Zilla::Plugin::MetaProvides::Package' => '1.11044404',
-    'Dist::Zilla::Plugin::MinimumPerl' => '0.02',
-    'Dist::Zilla::Plugin::NextRelease' => '0',
-    'Dist::Zilla::Plugin::OurPkgVersion' => '0.002',
-    'Dist::Zilla::Plugin::PodWeaver' => '0',
-    'Dist::Zilla::Plugin::Prepender' => '1.112280',
-    'Dist::Zilla::Plugin::ReportVersions::Tiny' => '1.01',
-    'Dist::Zilla::Plugin::Repository' => '0.16',
-    'Dist::Zilla::Plugin::Run' => '0.008',
-    'Dist::Zilla::Plugin::TaskWeaver' => '0.101620',
-    'Dist::Zilla::PluginBundle::Basic' => '0',
-    'Dist::Zilla::PluginBundle::Git' => '1.110500',
-    'Dist::Zilla::PluginBundle::TestingMania' => '0.010',
-    'Dist::Zilla::Role::PluginBundle::Easy' => '0',
-    'Dist::Zilla::Stash::PodWeaver' => '1.001000',
-    'List::Util' => '0',
-    'Moose' => '0',
-    'Pod::Elemental' => '0.102360',
-    'Pod::Elemental::Transformer::List' => '0',
-    'Pod::Weaver' => '3.101632',
-    'Pod::Weaver::Config::Assembler' => '0',
-    'Pod::Weaver::Plugin::StopWords' => '1.001005',
-    'Pod::Weaver::Plugin::Transformer' => '0',
-    'Pod::Weaver::Plugin::WikiDoc' => '0',
-    'Pod::Weaver::PluginBundle::Default' => '0',
-    'Pod::Weaver::Section::Support' => '1.001',
-    'YAML::Tiny' => '0',
-    'perl' => '5.006'
+  "recursive_test_files" => 1,
+  "requires" => {
+    "Dist::Zilla" => "4.200005",
+    "Dist::Zilla::Plugin::Authority" => "1.005",
+    "Dist::Zilla::Plugin::Bootstrap::lib" => 0,
+    "Dist::Zilla::Plugin::Bugtracker" => 0,
+    "Dist::Zilla::Plugin::CheckChangesHasContent" => "0.003",
+    "Dist::Zilla::Plugin::CheckExtraTests" => 0,
+    "Dist::Zilla::Plugin::DualBuilders" => "1.001",
+    "Dist::Zilla::Plugin::Git::NextVersion" => 0,
+    "Dist::Zilla::Plugin::GithubMeta" => "0.10",
+    "Dist::Zilla::Plugin::InstallRelease" => "0.006",
+    "Dist::Zilla::Plugin::MetaNoIndex" => "1.101130",
+    "Dist::Zilla::Plugin::MetaProvides::Package" => "1.11044404",
+    "Dist::Zilla::Plugin::MinimumPerl" => "0.02",
+    "Dist::Zilla::Plugin::NextRelease" => 0,
+    "Dist::Zilla::Plugin::PkgVersion" => 0,
+    "Dist::Zilla::Plugin::PodWeaver" => 0,
+    "Dist::Zilla::Plugin::Prepender" => "1.112280",
+    "Dist::Zilla::Plugin::ReportVersions::Tiny" => "1.01",
+    "Dist::Zilla::Plugin::Repository" => "0.16",
+    "Dist::Zilla::Plugin::Run" => "0.008",
+    "Dist::Zilla::Plugin::TaskWeaver" => "0.101620",
+    "Dist::Zilla::PluginBundle::Basic" => 0,
+    "Dist::Zilla::PluginBundle::Git" => "1.110500",
+    "Dist::Zilla::PluginBundle::TestingMania" => "0.014",
+    "Dist::Zilla::Role::PluginBundle::Easy" => 0,
+    "Dist::Zilla::Stash::PodWeaver" => "1.001000",
+    "List::Util" => 0,
+    "Moose" => 0,
+    "Moose::Util::TypeConstraints" => "1.01",
+    "Pod::Elemental" => "0.102360",
+    "Pod::Elemental::Transformer::List" => 0,
+    "Pod::Weaver" => "3.101632",
+    "Pod::Weaver::Config::Assembler" => 0,
+    "Pod::Weaver::Plugin::StopWords" => "1.001005",
+    "Pod::Weaver::Plugin::Transformer" => 0,
+    "Pod::Weaver::Plugin::WikiDoc" => 0,
+    "Pod::Weaver::PluginBundle::Default" => 0,
+    "Pod::Weaver::Section::Support" => "1.001",
+    "YAML::Tiny" => 0,
+    "perl" => "5.006",
+    "strict" => 0,
+    "warnings" => 0
   },
-  'script_files' => []
+  "script_files" => []
 );
 
 

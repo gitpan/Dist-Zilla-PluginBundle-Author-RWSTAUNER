@@ -62,7 +62,7 @@ eval { $v .= pmver('Dist::Zilla::Plugin::MetaNoIndex','1.101130') };
 eval { $v .= pmver('Dist::Zilla::Plugin::MetaProvides::Package','1.11044404') };
 eval { $v .= pmver('Dist::Zilla::Plugin::MinimumPerl','0.02') };
 eval { $v .= pmver('Dist::Zilla::Plugin::NextRelease','any version') };
-eval { $v .= pmver('Dist::Zilla::Plugin::OurPkgVersion','0.002') };
+eval { $v .= pmver('Dist::Zilla::Plugin::PkgVersion','any version') };
 eval { $v .= pmver('Dist::Zilla::Plugin::PodWeaver','any version') };
 eval { $v .= pmver('Dist::Zilla::Plugin::Prepender','1.112280') };
 eval { $v .= pmver('Dist::Zilla::Plugin::ReportVersions::Tiny','1.01') };
@@ -72,7 +72,7 @@ eval { $v .= pmver('Dist::Zilla::Plugin::TaskWeaver','0.101620') };
 eval { $v .= pmver('Dist::Zilla::Plugin::Test::PodSpelling','2') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::Basic','any version') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::Git','1.110500') };
-eval { $v .= pmver('Dist::Zilla::PluginBundle::TestingMania','0.010') };
+eval { $v .= pmver('Dist::Zilla::PluginBundle::TestingMania','0.014') };
 eval { $v .= pmver('Dist::Zilla::Role::Plugin','any version') };
 eval { $v .= pmver('Dist::Zilla::Role::PluginBundle::Easy','any version') };
 eval { $v .= pmver('Dist::Zilla::Role::Releaser','any version') };
@@ -82,6 +82,7 @@ eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('List::Util','any version') };
 eval { $v .= pmver('Module::Build','0.3601') };
 eval { $v .= pmver('Moose','any version') };
+eval { $v .= pmver('Moose::Util::TypeConstraints','1.01') };
 eval { $v .= pmver('Pod::Elemental','0.102360') };
 eval { $v .= pmver('Pod::Elemental::Transformer::List','any version') };
 eval { $v .= pmver('Pod::Weaver','3.101632') };
@@ -94,6 +95,8 @@ eval { $v .= pmver('Pod::Weaver::Section::Support','1.001') };
 eval { $v .= pmver('Test::DZil','any version') };
 eval { $v .= pmver('Test::More','0.96') };
 eval { $v .= pmver('YAML::Tiny','any version') };
+eval { $v .= pmver('strict','any version') };
+eval { $v .= pmver('warnings','any version') };
 
 
 
