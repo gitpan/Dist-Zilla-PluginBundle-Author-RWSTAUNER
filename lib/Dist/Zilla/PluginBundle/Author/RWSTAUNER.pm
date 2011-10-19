@@ -12,7 +12,7 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.108';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.200';
 }
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -22,7 +22,10 @@ BEGIN {
 use Moose;
 use List::Util qw(first); # core
 use Dist::Zilla 4.200005;
-with 'Dist::Zilla::Role::PluginBundle::Easy';
+with qw(
+  Dist::Zilla::Role::PluginBundle::Easy
+  Dist::Zilla::Role::PluginBundle::Config::Slicer
+);
 # Dist::Zilla::Role::DynamicConfig is not necessary: payload is already dynamic
 
 use Dist::Zilla::PluginBundle::Basic (); # use most of the plugins included
@@ -111,7 +114,7 @@ sub _generate_attribute {
 }
 
 # main
-sub configure {
+after configure => sub {
   my ($self) = @_;
 
   my $skip = $self->skip_plugins;
@@ -119,10 +122,9 @@ sub configure {
 
   my $dynamic = $self->payload;
   # sneak this config in behind @TestingMania's back
-  $dynamic->{'Test::Compile:fake_home'} = 1
+  $dynamic->{'Test::Compile.fake_home'} = 1
     unless first { /Test::Compile\W+fake_home/ } keys %$dynamic;
 
-  $self->_add_bundled_plugins;
   my $plugins = $self->plugins;
 
   my $i = -1;
@@ -143,23 +145,7 @@ sub configure {
         redo;
       }
     }
-
-    # search the dynamic config for anything matching the current plugin
-    my $plugin_attr = qr/^(?:$alias|.?$moniker)\W+(\w+)(\W*)$/;
-    while( my ($key, $val) = each %$dynamic ){
-      # match keys like Plugin::Name:attr and PlugName/attr@
-      next unless
-        my ($attr, $over) = ($key =~ $plugin_attr);
-
-      # if its already an arrayref
-      if( ref(my $current = $conf->{$attr}) eq 'ARRAY' ){
-        # overwrite if specified, otherwise append
-        $val = $over ? [$val] : [@$current, $val];
-      }
-      # modify original
-      $conf->{$attr} = $val;
-    }
-  };
+  }
   if ( $ENV{DZIL_BUNDLE_DEBUG} ) {
     eval {
       require YAML::Tiny; # dzil requires this
@@ -167,9 +153,9 @@ sub configure {
     };
     warn $@ if $@;
   }
-}
+};
 
-sub _add_bundled_plugins {
+sub configure {
   my ($self) = @_;
 
   $self->log_fatal("you must not specify both weaver_config and is_task")
@@ -371,8 +357,8 @@ EOF_MANIFEST_SKIP
   ];
 }
 
-__PACKAGE__->meta->make_immutable;
 no Moose;
+__PACKAGE__->meta->make_immutable;
 1;
 
 
@@ -391,7 +377,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.108
+version 3.200
 
 =head1 SYNOPSIS
 
@@ -418,14 +404,14 @@ Possible options and their default values:
 
   auto_prereqs   = 1  ; enable AutoPrereqs
   builder        = eumm ; or 'mb' or 'both'
-  disable_tests  =    ; corresponds to @TestingMania:disable
+  disable_tests  =    ; corresponds to @TestingMania.disable
   fake_release   = 0  ; if true will use FakeRelease instead of 'releaser'
   install_command = cpanm -v -i . (passed to InstallRelease)
   is_task        = 0  ; set to true to use TaskWeaver instead of PodWeaver
   placeholder_comments = 0 ; use '# VERSION' and '# AUTHORITY' comments
   releaser       = UploadToCPAN
   skip_plugins   =    ; default empty; a regexp of plugin names to exclude
-  skip_prereqs   =    ; default empty; corresponds to AutoPrereqs:skip
+  skip_prereqs   =    ; default empty; corresponds to AutoPrereqs.skip
   weaver_config  = @Author::RWSTAUNER
 
 The C<fake_release> option also respects C<$ENV{DZIL_FAKERELEASE}>.
@@ -435,17 +421,13 @@ or to an empty string to disable adding a releaser.
 This can make it easier to include a plugin that requires configuration
 by just ignoring the default releaser and including your own normally.
 
-B<Note> that you can also specify attributes for any of the bundled plugins.
-This works like L<Dist::Zilla::Role::Stash::Plugins> except that the role is
-not actually used (and there is no stash) because PluginBundles already have
-a dynamic configuration.
-The option should be the plugin name and the attribute separated by a colon
-(or a dot, or any other non-word character(s)).
-
-For example:
+B<NOTE>:
+This bundle consumes L<Dist::Zilla::Role::PluginBundle::Config::Slicer>
+so you can also specify attributes for any of the bundled plugins.
+The option should be the plugin name and the attribute separated by a dot:
 
   [@Author::RWSTAUNER]
-  AutoPrereqs:skip = Bad::Module
+  AutoPrereqs.skip = Bad::Module
 
 B<Note> that this is different than
 
@@ -457,29 +439,7 @@ which will load the plugin a second time.
 The first example actually alters the plugin configuration
 as it is included by the Bundle.
 
-String (or boolean) attributes will overwrite any in the Bundle:
-
-  [@Author::RWSTAUNER]
-  Test::Compile.fake_home = 0
-
-Arrayref attributes will be appended to any in the bundle:
-
-  [@Author::RWSTAUNER]
-  MetaNoIndex:directory = another-dir
-
-Since the Bundle initializes MetaNoIndex:directory to an arrayref
-of directories, C<another-dir> will be appended to that arrayref.
-
-You can overwrite the attribute by adding non-word characters to the end of it:
-
-  [@Author::RWSTAUNER]
-  MetaNoIndex:directory@ = another-dir
-  ; or MetaNoIndex:directory[] = another-dir
-
-You can use any non-word characters: use what makes the most sense to you.
-B<Note> that you cannot specify an attribute more than once
-(since the configuration is dynamic
-and the Bundle cannot predeclare unknown attributes as arrayrefs).
+See L<Config::MVP::Slicer/CONFIGURATION SYNTAX> for more information.
 
 If your situation is more complicated you can use the C<skip_plugins>
 attribute to have the Bundle ignore that plugin
@@ -590,6 +550,10 @@ L<Dist::Zilla>
 =item *
 
 L<Dist::Zilla::Role::PluginBundle::Easy>
+
+=item *
+
+L<Dist::Zilla::Role::PluginBundle::Config::Slicer>
 
 =item *
 

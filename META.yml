@@ -35,10 +35,10 @@ no_index:
 provides:
   Dist::Zilla::PluginBundle::Author::RWSTAUNER:
     file: lib/Dist/Zilla/PluginBundle/Author/RWSTAUNER.pm
-    version: 3.108
+    version: 3.200
   Pod::Weaver::PluginBundle::Author::RWSTAUNER:
     file: lib/Pod/Weaver/PluginBundle/Author/RWSTAUNER.pm
-    version: 3.108
+    version: 3.200
 recommends:
   Dist::Zilla::Plugin::Test::PodSpelling: 2
 requires:
@@ -66,6 +66,7 @@ requires:
   Dist::Zilla::PluginBundle::Basic: 0
   Dist::Zilla::PluginBundle::Git: 1.110500
   Dist::Zilla::PluginBundle::TestingMania: 0.014
+  Dist::Zilla::Role::PluginBundle::Config::Slicer: 0
   Dist::Zilla::Role::PluginBundle::Easy: 0
   Dist::Zilla::Stash::PodWeaver: 1.001000
   List::Util: 0
@@ -88,7 +89,7 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-PluginBundle-Author-RWSTAUNER
   homepage: https://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER
   repository: https://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER.git
-version: 3.108
+version: 3.200
 x_Dist_Zilla:
   plugins:
     -
@@ -158,7 +159,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::GithubMeta
       name: '@Author::RWSTAUNER/GithubMeta'
-      version: 0.20
+      version: 0.22
     -
       class: Dist::Zilla::Plugin::AutoPrereqs
       name: '@Author::RWSTAUNER/AutoPrereqs'
@@ -214,7 +215,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Test::PodSpelling
       name: '@Author::RWSTAUNER/Test::PodSpelling'
-      version: v2.0.0
+      version: 2.1.0
     -
       class: Dist::Zilla::Plugin::Test::UnusedVars
       name: '@Author::RWSTAUNER/@TestingMania/Test::UnusedVars'
@@ -254,7 +255,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Test::Compile
       name: '@Author::RWSTAUNER/@TestingMania/Test::Compile'
-      version: 1.112400
+      version: 1.112820
     -
       class: Dist::Zilla::Plugin::Test::Kwalitee
       name: '@Author::RWSTAUNER/@TestingMania/Test::Kwalitee'

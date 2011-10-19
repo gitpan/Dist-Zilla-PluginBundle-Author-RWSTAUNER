@@ -23,7 +23,7 @@ my %module_build_args = (
     "Randy Stauner <rwstauner\@cpan.org>"
   ],
   "dist_name" => "Dist-Zilla-PluginBundle-Author-RWSTAUNER",
-  "dist_version" => "3.108",
+  "dist_version" => "3.200",
   "license" => "perl",
   "module_name" => "Dist::Zilla::PluginBundle::Author::RWSTAUNER",
   "recommends" => {
@@ -55,6 +55,7 @@ my %module_build_args = (
     "Dist::Zilla::PluginBundle::Basic" => 0,
     "Dist::Zilla::PluginBundle::Git" => "1.110500",
     "Dist::Zilla::PluginBundle::TestingMania" => "0.014",
+    "Dist::Zilla::Role::PluginBundle::Config::Slicer" => 0,
     "Dist::Zilla::Role::PluginBundle::Easy" => 0,
     "Dist::Zilla::Stash::PodWeaver" => "1.001000",
     "List::Util" => 0,
