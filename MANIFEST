@@ -6,7 +6,7 @@ MANIFEST.SKIP
 META.json
 META.yml
 Makefile.PL
-README
+README.mkdn
 dist.ini
 examples/dist.ini
 examples/weaver.ini

@@ -1,5 +1,11 @@
 Revision history for Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
+3.201     2011-11-18T04:20:13Z
+
+  - Use ReadmeMarkdownFromPod and CopyReadmeFromBuild to automate
+    a more useful github readme
+  - Load @Git bundle earlier (before releaser)
+
 3.200     2011-10-19T23:49:56Z
 
   - Move some logic out into Config::MVP::Slicer

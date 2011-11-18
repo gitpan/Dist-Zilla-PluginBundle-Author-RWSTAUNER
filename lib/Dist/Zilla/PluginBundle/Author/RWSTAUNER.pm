@@ -12,7 +12,7 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.200';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.201';
 }
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -34,6 +34,7 @@ use Dist::Zilla::PluginBundle::Git 1.110500 ();
 use Dist::Zilla::PluginBundle::TestingMania 0.014 ();
 use Dist::Zilla::Plugin::Authority 1.005 (); # accepts any non-whitespace + locate_comment
 use Dist::Zilla::Plugin::Bugtracker ();
+use Dist::Zilla::Plugin::CopyReadmeFromBuild 0.0019 ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CheckChangesHasContent 0.003 ();
 use Dist::Zilla::Plugin::DualBuilders 1.001 (); # only runs tests once
@@ -49,6 +50,8 @@ use Dist::Zilla::Plugin::PkgVersion ();
 #use Dist::Zilla::Plugin::OurPkgVersion 0.002 ();
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::Prepender 1.112280 ();
+use Pod::Markdown 1.110731 (); # verbatim indentation fix [rt-72414]
+use Dist::Zilla::Plugin::ReadmeMarkdownFromPod 0.103510 ();
 use Dist::Zilla::Plugin::Repository 0.16 (); # deprecates github_http
 use Dist::Zilla::Plugin::ReportVersions::Tiny 1.01 ();
 use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
@@ -174,10 +177,10 @@ sub configure {
       PruneCruft
       ManifestSkip
     ),
-    # this is just for github
-    [ PruneFiles => 'PruneRepoMetaFiles' => { match => '^(README.pod)$' } ],
     # Devel::Cover db does not need to be packaged with distribution
     [ PruneFiles => 'PruneDevelCoverDatabase' => { match => '^(cover_db/.+)' } ],
+    # Code::Stat report
+    [ PruneFiles => 'PruneCodeStatCollection' => { match => '^codestat\.out' } ],
 
   # munge files
     [
@@ -210,7 +213,8 @@ sub configure {
   # generated distribution files
     qw(
       License
-      Readme
+      ReadmeMarkdownFromPod
+      CopyReadmeFromBuild
     ),
     # @APOCALYPTIC: generate MANIFEST.SKIP ?
 
@@ -309,15 +313,15 @@ sub configure {
 
   );
 
+  # defaults: { tag_format => '%v', push_to => [ qw(origin) ] }
+  $self->add_bundle( '@Git' => {allow_dirty => 'README.mkdn'} )
+    if $self->use_git_bundle;
+
   # release
   my $releaser = $self->fake_release ? 'FakeRelease' : $self->releaser;
   # ignore releaser if it's set to empty string
   $self->add_plugins($releaser)
     if $releaser;
-
-  # defaults: { tag_format => '%v', push_to => [ qw(origin) ] }
-  $self->add_bundle( '@Git' )
-    if $self->use_git_bundle;
 
   $self->add_plugins(
     [ InstallRelease => { install_command => $self->install_command } ]
@@ -377,7 +381,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.200
+version 3.201
 
 =head1 SYNOPSIS
 
