@@ -23,7 +23,7 @@ my %module_build_args = (
     "Randy Stauner <rwstauner\@cpan.org>"
   ],
   "dist_name" => "Dist-Zilla-PluginBundle-Author-RWSTAUNER",
-  "dist_version" => "3.201",
+  "dist_version" => "3.202",
   "license" => "perl",
   "module_name" => "Dist::Zilla::PluginBundle::Author::RWSTAUNER",
   "recommends" => {
@@ -65,7 +65,7 @@ my %module_build_args = (
     "Moose::Util::TypeConstraints" => "1.01",
     "Pod::Elemental" => "0.102360",
     "Pod::Elemental::Transformer::List" => 0,
-    "Pod::Markdown" => "1.110731",
+    "Pod::Markdown" => "1.120",
     "Pod::Weaver" => "3.101632",
     "Pod::Weaver::Config::Assembler" => 0,
     "Pod::Weaver::Plugin::StopWords" => "1.001005",

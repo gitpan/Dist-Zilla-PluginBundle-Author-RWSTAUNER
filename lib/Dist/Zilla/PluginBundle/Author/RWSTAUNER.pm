@@ -12,7 +12,7 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.201';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '3.202';
 }
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -50,7 +50,7 @@ use Dist::Zilla::Plugin::PkgVersion ();
 #use Dist::Zilla::Plugin::OurPkgVersion 0.002 ();
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::Prepender 1.112280 ();
-use Pod::Markdown 1.110731 (); # verbatim indentation fix [rt-72414]
+use Pod::Markdown 1.120 ();
 use Dist::Zilla::Plugin::ReadmeMarkdownFromPod 0.103510 ();
 use Dist::Zilla::Plugin::Repository 0.16 (); # deprecates github_http
 use Dist::Zilla::Plugin::ReportVersions::Tiny 1.01 ();
@@ -308,14 +308,19 @@ sub configure {
       CheckExtraTests
       CheckChangesHasContent
       TestRelease
-      ConfirmRelease
     ),
 
   );
 
   # defaults: { tag_format => '%v', push_to => [ qw(origin) ] }
-  $self->add_bundle( '@Git' => {allow_dirty => 'README.mkdn'} )
+  $self->add_bundle( '@Git' => {allow_dirty => [qw(Changes README.mkdn)]} )
     if $self->use_git_bundle;
+
+  $self->add_plugins(
+    qw(
+      ConfirmRelease
+    ),
+  );
 
   # release
   my $releaser = $self->fake_release ? 'FakeRelease' : $self->releaser;
@@ -381,7 +386,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 3.201
+version 3.202
 
 =head1 SYNOPSIS
 
@@ -465,8 +470,6 @@ This bundle is roughly equivalent to:
   [GatherDir]             ; everything under top dir
   [PruneCruft]            ; default stuff to skip
   [ManifestSkip]          ; custom stuff to skip
-  ; use PruneFiles to specifically remove ^(dist.ini)$
-  ; use PruneFiles to specifically remove ^(README.pod)$ (just for github)
 
   ; munge files
   [Authority]             ; inject $AUTHORITY into modules
@@ -485,7 +488,8 @@ This bundle is roughly equivalent to:
 
   ; generate files
   [License]               ; generate distribution files (dzil core [@Basic])
-  [Readme]
+  [ReadmeMarkdownFromPod] ; generate markdown from main_module pod
+  [CopyReadmeFromBuild]   ; copy it to root dir for github repo
 
   ; metadata
   [Bugtracker]            ; include bugtracker URL and email address (uses RT)
@@ -534,13 +538,17 @@ This bundle is roughly equivalent to:
   [Manifest]              ; build MANIFEST file (dzil core [@Basic])
 
   ; actions for releasing the distribution (dzil core [@Basic])
+  [CheckExtraTests]       ; xt/
   [CheckChangesHasContent]
   [TestRelease]           ; run tests before releasing
+
+  [@Git]                  ; use Git bundle to commit/tag/push after releasing
+  allow_dirty = Changes README.mkdn
+
   [ConfirmRelease]        ; are you sure?
   [UploadToCPAN]
   ; see CONFIGURATION for alternate Release plugin configuration options
 
-  [@Git]                  ; use Git bundle to commit/tag/push after releasing
   [InstallRelease]        ; install the new dist (using 'install_command')
 
 =head1 SEE ALSO

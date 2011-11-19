@@ -62,7 +62,7 @@ my %WriteMakefileArgs = (
     "Moose::Util::TypeConstraints" => "1.01",
     "Pod::Elemental" => "0.102360",
     "Pod::Elemental::Transformer::List" => 0,
-    "Pod::Markdown" => "1.110731",
+    "Pod::Markdown" => "1.120",
     "Pod::Weaver" => "3.101632",
     "Pod::Weaver::Config::Assembler" => 0,
     "Pod::Weaver::Plugin::StopWords" => "1.001005",
@@ -74,7 +74,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "3.201",
+  "VERSION" => "3.202",
   "test" => {
     "TESTS" => "t/*.t"
   }
