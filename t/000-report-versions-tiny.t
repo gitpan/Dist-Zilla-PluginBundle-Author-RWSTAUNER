@@ -78,6 +78,7 @@ eval { $v .= pmver('Dist::Zilla::PluginBundle::TestingMania','0.014') };
 eval { $v .= pmver('Dist::Zilla::Role::Plugin','any version') };
 eval { $v .= pmver('Dist::Zilla::Role::PluginBundle::Config::Slicer','any version') };
 eval { $v .= pmver('Dist::Zilla::Role::PluginBundle::Easy','any version') };
+eval { $v .= pmver('Dist::Zilla::Role::PluginBundle::PluginRemover','any version') };
 eval { $v .= pmver('Dist::Zilla::Role::Releaser','any version') };
 eval { $v .= pmver('Dist::Zilla::Stash::PodWeaver','1.001000') };
 eval { $v .= pmver('File::Find','any version') };

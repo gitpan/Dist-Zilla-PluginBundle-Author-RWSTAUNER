@@ -56,6 +56,7 @@ my %WriteMakefileArgs = (
     "Dist::Zilla::PluginBundle::TestingMania" => "0.014",
     "Dist::Zilla::Role::PluginBundle::Config::Slicer" => 0,
     "Dist::Zilla::Role::PluginBundle::Easy" => 0,
+    "Dist::Zilla::Role::PluginBundle::PluginRemover" => 0,
     "Dist::Zilla::Stash::PodWeaver" => "1.001000",
     "List::Util" => 0,
     "Moose" => 0,
@@ -74,7 +75,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "3.202",
+  "VERSION" => "3.203",
   "test" => {
     "TESTS" => "t/*.t"
   }
