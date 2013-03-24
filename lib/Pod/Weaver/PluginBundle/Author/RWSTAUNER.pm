@@ -12,21 +12,12 @@ use warnings;
 
 package Pod::Weaver::PluginBundle::Author::RWSTAUNER;
 {
-  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '3.203';
+  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '4.000';
 }
 BEGIN {
   $Pod::Weaver::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
 }
 # ABSTRACT: RWSTAUNER's Pod::Weaver config
-
-use Pod::Weaver 3.101632 ();
-use Pod::Weaver::PluginBundle::Default ();
-use Pod::Weaver::Plugin::StopWords 1.001005 ();
-use Pod::Weaver::Plugin::Transformer ();
-use Pod::Weaver::Plugin::WikiDoc ();
-use Pod::Weaver::Section::Support 1.001 ();
-use Pod::Elemental 0.102360 ();
-use Pod::Elemental::Transformer::List ();
 
 use Pod::Weaver::Config::Assembler;
 sub _exp { Pod::Weaver::Config::Assembler->expand_package($_[0]) }
@@ -73,6 +64,7 @@ sub mvp_bundle_config {
     # extra
     [ 'Usage',       _exp('Generic'), {} ],
 
+    ['Class Methods',_exp('Collect'), { command => 'class_method' } ], # header => 'CLASS METHODS',
     # default
     [ 'Attributes',  _exp('Collect'), { command => 'attr'   } ],
     [ 'Methods',     _exp('Collect'), { command => 'method' } ],
@@ -94,6 +86,7 @@ sub mvp_bundle_config {
     # include Support section with various cpan links and github repo
     [ 'Support',     _exp('Support'),
       {
+        ':version' => '1.001',
         repository_content => '',
         repository_link => 'both',
         # NOTE: it may be worth watching the module to see if more are added
@@ -106,15 +99,17 @@ sub mvp_bundle_config {
 
     [ 'Acknowledgements', _exp('Generic'), {header => 'ACKNOWLEDGEMENTS'} ],
 
-    # default
     _plain('Authors'),
+    _plain('Contributors'),
+
     _plain('Legal'),
 
     # plugins
     [ 'List',        _exp('-Transformer'), { 'transformer' => 'List' } ],
 
-    # my dictionary doesn't like that extra 'E' but it looks funny without it
     _plain('-StopWords', {
+      ':version' => '1.005', # after =encoding
+      # my dictionary doesn't like that extra 'E' but it looks funny without it
       include => 'ACKNOWLEDGEMENTS'
     }),
   );
@@ -128,13 +123,13 @@ sub mvp_bundle_config {
 
 1;
 
-
 __END__
+
 =pod
 
-=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle WikiDoc
-
 =encoding utf-8
+
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle
 
 =head1 NAME
 
@@ -142,91 +137,94 @@ Pod::Weaver::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Pod::Weaver config
 
 =head1 VERSION
 
-version 3.203
+version 4.000
 
 =head1 SYNOPSIS
 
-  # weaver.ini
+  ; weaver.ini
 
   [@Author::RWSTAUNER]
 
 or with a F<dist.ini> like so:
 
-  # dist.ini
+  ; dist.ini
 
   [@Author::RWSTAUNER]
 
 you don't need a F<weaver.ini> at all.
 
-=head1 DESCRIPTION
+=for Pod::Coverage mvp_bundle_config
 
-This PluginBundle is like the @Default
-with the following additions:
+=head1 ROUGHLY EQUIVALENT
 
-=over 4
+This bundle is roughly equivalent to:
 
-=item *
+  [-Encoding]
+  [-WikiDoc]
+  [@CorePrep]
+  [Name]
+  [Version]
 
-Inserts a SUPPORT section to the POD just before AUTHOR
+  [Region / Prelude]
+  region_name = prelude
 
-=item *
+  [Generic / Synopsis]
+  header = SYNOPSIS
 
-Adds the List Transformer
+  [Generic / Description]
+  header = DESCRIPTION
 
-=item *
+  [Generic / Overview]
+  header = OVERVIEW
 
-Enables WikiDoc formatting
+  [Generic / Usage]
+  header = USAGE
 
-=item *
+  [Collect / Class Methods]
+  command = class_method
+  header  = CLASS METHODS
 
-Generates and collects stopwords
-
-=back
-
-It is roughly equivalent to:
-
-  [Encoding]                ; prepend '=encoding utf-8' automatically
-  [WikiDoc]                 ; transform wikidoc sections to POD
-  [@CorePrep]               ; [@Default]
-
-  [Name]                    ; [@Default]
-  [Version]                 ; [@Default]
-
-  [Region  / prelude]       ; [@Default]
-
-  [Generic / SYNOPSIS]      ; [@Default]
-  [Generic / DESCRIPTION]   ; [@Default]
-  [Generic / OVERVIEW]      ; [@Default]
-  [Generic / USAGE]         ; Put USAGE section near the top
-
-  [Collect / ATTRIBUTES]    ; [@Default]
+  [Collect / Attributes]
   command = attr
+  header  = ATTRIBUTES
 
-  [Collect / METHODS]       ; [@Default]
+  [Collect / Methods]
   command = method
+  header  = METHODS
 
-  [Collect / FUNCTIONS]     ; [@Default]
+  [Collect / Functions]
   command = func
+  header  = FUNCTIONS
 
-  [Leftovers]               ; [@Default]
+  [Leftovers]
 
-  [Region  / postlude]      ; [@Default]
+  [Region / Postlude]
+  region_name = postlude
 
-  ; custom section
-  [Support]                 ; =head1 SUPPORT (bugs, cpants, git...)
+  [Support]
+  :version           = 1.001
   repository_content =
-  repository_link = both
-  websites = search, rt, ratings, testers, testmatrix, deps
+  repository_link    = both
+  websites           = search
+  websites           = rt
+  websites           = ratings
+  websites           = testers
+  websites           = testmatrix
+  websites           = deps
 
-  [Authors]                 ; [@Default]
-  [Legal]                   ; [@Default]
+  [Generic / Acknowledgements]
+  header = ACKNOWLEDGEMENTS
 
-  [-Transformer]            ; enable =for :list
+  [Authors]
+  [Contributors]
+  [Legal]
+
+  [-Transformer / List]
   transformer = List
 
-  [-StopWords]              ; generate some stopwords and gather them together
-
-=for Pod::Coverage mvp_bundle_config
+  [-StopWords]
+  :version = 1.005
+  include  = ACKNOWLEDGEMENTS
 
 =head1 AUTHOR
 
@@ -240,4 +238,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

@@ -18,6 +18,7 @@ my $noindex = (
   grep { ref($_) && $_->[0] =~ 'MetaNoIndex' }
       @{ init_bundle()->plugins }
 )[0]->[-1];
+delete $noindex->{':version'}; # but ignore this
 
 my $noindex_dirs = $noindex->{directory};
 
@@ -34,7 +35,6 @@ my %default_exp = (
 
 foreach my $test (
   [{}, {%default_exp}],
-  [{'skip_prereqs'     => 'Goober'},            { %default_exp, AutoPrereqs => {skip => 'Goober'} }],
   [{'placeholder_comments' => 1   },            { %default_exp, Authority => {do_metadata => 1, do_munging => 1, locate_comment => 1} }],
   [{'PruneFiles.match' => 'fudge'},             { %default_exp, map { ("Prune$_" => {match => 'fudge'}) } qw(CodeStatCollection DevelCoverDatabase) }],
   [{'PruneDevelCoverDatabase.match' => 'fudge'}, { %default_exp, PruneDevelCoverDatabase => {match => 'fudge'} }],
@@ -59,6 +59,7 @@ foreach my $test (
 
     my $matched = exists $exp->{$plugname} ? $plugname : exists $exp->{$name} ? $name : next;
     if( exists $exp->{$matched} ){
+      delete $payload->{':version'}; # ignore any versions in comparison
       is_deeply($payload, $exp->{$matched}, "expected configuration for $matched")
         or diag explain [$payload, $matched, $exp->{$matched}];
       ++$checked->{$matched};
@@ -115,10 +116,6 @@ foreach my $test (
   $bundle = init_bundle({'-remove' => [qw(Test::Compile ExtraTests)]});
   &$has_not('Test::Compile');
   &$has_not('ExtraTests');
-
-  $bundle = init_bundle({disable_tests => 'EOLTests,Test::Compile'});
-  &$has_not('EOLTests');
-  &$has_not('Test::Compile');
   &$has_ok('NoTabsTests');
 
   $bundle = init_bundle({});

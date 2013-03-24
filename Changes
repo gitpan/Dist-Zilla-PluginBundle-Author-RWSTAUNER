@@ -1,5 +1,20 @@
 Revision history for Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
+4.000     2013-03-24T05:25:29Z
+
+  - Use BundleInspector plugin to determine prereq info and generate
+    "roughly equivalent" ini configs in pod.
+  - Include plugin version requirements in plugin specs as ':version'
+    instead of 'use' statements (and get rid of the use statements).
+  - Revert to basic Readme in dist
+  - Generate README.pod (instead of markdown) in repo root for github
+    (ReadmeAnyFromPod instead of ReadmeMarkdownFromPod + CopyReadmeFromBuild)
+  - Remove 'disable_tests' and 'skip_prereqs' in favor of role-based
+    '-remove' and 'AutoPrereqs.skip'
+  - Add Tests::ChangesHasContent, CheckMetaResources, CheckPrereqsIndexed
+  - Collect contributors from git and list in meta and pod
+  - Collect =class_method pod commands
+
 3.203     2011-12-10T00:02:58Z
 
   - Consume PluginRemover role to get '-remove' magically
