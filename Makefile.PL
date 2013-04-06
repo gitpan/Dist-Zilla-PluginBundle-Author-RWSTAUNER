@@ -6,23 +6,19 @@ use 5.006;
 
 use ExtUtils::MakeMaker 6.30;
 
+use File::ShareDir::Install;
+install_share dist => "share";
+install_share module => "Dist::Zilla::MintingProfile::Author::RWSTAUNER", "share\/profiles";
 
 
 my %WriteMakefileArgs = (
   "ABSTRACT" => "RWSTAUNER's Dist::Zilla config",
   "AUTHOR" => "Randy Stauner <rwstauner\@cpan.org>",
   "BUILD_REQUIRES" => {
-    "Dist::Zilla::Role::Plugin" => 0,
-    "Dist::Zilla::Role::Releaser" => 0,
-    "ExtUtils::MakeMaker" => 0,
-    "File::Find" => 0,
-    "File::Spec::Functions" => 0,
-    "File::Temp" => 0,
-    "Module::Build" => "0.3601",
-    "Test::DZil" => 0,
-    "Test::More" => "0.96"
+    "Module::Build" => "0.3601"
   },
   "CONFIGURE_REQUIRES" => {
+    "File::ShareDir::Install" => "0.03",
     "Module::Build" => "0.3601"
   },
   "DISTNAME" => "Dist-Zilla-PluginBundle-Author-RWSTAUNER",
@@ -30,7 +26,8 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Dist::Zilla::PluginBundle::Author::RWSTAUNER",
   "PREREQ_PM" => {
-    "Dist::Zilla" => "4.300018",
+    "Data::Section" => 0,
+    "Dist::Zilla" => "4.300032",
     "Dist::Zilla::Plugin::Authority" => "1.005",
     "Dist::Zilla::Plugin::AutoPrereqs" => 0,
     "Dist::Zilla::Plugin::Bootstrap::lib" => 0,
@@ -45,6 +42,7 @@ my %WriteMakefileArgs = (
     "Dist::Zilla::Plugin::GatherDir" => 0,
     "Dist::Zilla::Plugin::GenerateFile" => 0,
     "Dist::Zilla::Plugin::Git::Describe" => 0,
+    "Dist::Zilla::Plugin::Git::Init" => 0,
     "Dist::Zilla::Plugin::Git::NextVersion" => 0,
     "Dist::Zilla::Plugin::GithubMeta" => "0.10",
     "Dist::Zilla::Plugin::InstallRelease" => "0.006",
@@ -69,7 +67,9 @@ my %WriteMakefileArgs = (
     "Dist::Zilla::Plugin::ReadmeAnyFromPod" => "0.120120",
     "Dist::Zilla::Plugin::Repository" => "0.16",
     "Dist::Zilla::Plugin::Run" => "0.014",
+    "Dist::Zilla::Plugin::Run::AfterMint" => 0,
     "Dist::Zilla::Plugin::ShareDir" => 0,
+    "Dist::Zilla::Plugin::TemplateModule" => 0,
     "Dist::Zilla::Plugin::Test::ChangesHasContent" => "0.006",
     "Dist::Zilla::Plugin::Test::PodSpelling" => 0,
     "Dist::Zilla::Plugin::Test::ReportPrereqs" => "0.004",
@@ -77,13 +77,16 @@ my %WriteMakefileArgs = (
     "Dist::Zilla::Plugin::UploadToCPAN" => 0,
     "Dist::Zilla::PluginBundle::Git" => "2.004",
     "Dist::Zilla::PluginBundle::TestingMania" => "0.019",
+    "Dist::Zilla::Role::MintingProfile::ShareDir" => 0,
     "Dist::Zilla::Role::PluginBundle::Config::Slicer" => 0,
     "Dist::Zilla::Role::PluginBundle::Easy" => 0,
     "Dist::Zilla::Role::PluginBundle::PluginRemover" => 0,
     "Dist::Zilla::Stash::PodWeaver" => "1.005",
+    "Git::Wrapper" => 0,
     "List::Util" => 0,
     "Moose" => 0,
     "Moose::Util::TypeConstraints" => "1.01",
+    "MooseX::AttributeShortcuts" => 0,
     "Pod::Elemental::Transformer::List" => 0,
     "Pod::Weaver" => "3.101633",
     "Pod::Weaver::Config::Assembler" => 0,
@@ -100,18 +103,43 @@ my %WriteMakefileArgs = (
     "Pod::Weaver::Section::Legal" => 0,
     "Pod::Weaver::Section::Name" => 0,
     "Pod::Weaver::Section::Region" => 0,
-    "Pod::Weaver::Section::Support" => "1.001",
+    "Pod::Weaver::Section::Support" => "1.005",
     "Pod::Weaver::Section::Version" => 0,
     "YAML::Tiny" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "4.000",
+  "TEST_REQUIRES" => {
+    "Dist::Zilla::Role::Plugin" => 0,
+    "Dist::Zilla::Role::Releaser" => 0,
+    "ExtUtils::MakeMaker" => 0,
+    "File::Find" => 0,
+    "File::Spec::Functions" => 0,
+    "File::Temp" => 0,
+    "Path::Class" => 0,
+    "Test::DZil" => 0,
+    "Test::File::ShareDir" => 0,
+    "Test::More" => "0.96"
+  },
+  "VERSION" => "4.100",
   "test" => {
     "TESTS" => "t/*.t"
   }
 );
 
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
+  my $tr = delete $WriteMakefileArgs{TEST_REQUIRES};
+  my $br = $WriteMakefileArgs{BUILD_REQUIRES};
+  for my $mod ( keys %$tr ) {
+    if ( exists $br->{$mod} ) {
+      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
+    }
+    else {
+      $br->{$mod} = $tr->{$mod};
+    }
+  }
+}
 
 unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
   my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
@@ -131,5 +159,10 @@ delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
 
 WriteMakefile(%WriteMakefileArgs);
 
+{
+package
+MY;
+use File::ShareDir::Install qw(postamble);
+}
 
 

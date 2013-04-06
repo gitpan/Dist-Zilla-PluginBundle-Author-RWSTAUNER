@@ -13,10 +13,12 @@ Randy
 Stauner
 rwstauner
 lib
+Dist
+Zilla
+MintingProfile
+Author
+RWSTAUNER
 Pod
 Weaver
 PluginBundle
-Author
-RWSTAUNER
-Dist
-Zilla
+Minter

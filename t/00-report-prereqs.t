@@ -1,4 +1,12 @@
 #!perl
+#
+# This file is part of Dist-Zilla-PluginBundle-Author-RWSTAUNER
+#
+# This software is copyright (c) 2010 by Randy Stauner.
+#
+# This is free software; you can redistribute it and/or modify it under
+# the same terms as the Perl 5 programming language system itself.
+#
 
 use strict;
 use warnings;
@@ -10,6 +18,7 @@ use File::Spec::Functions;
 use List::Util qw/max/;
 
 my @modules = qw(
+  Data::Section
   Devel::Cover
   Dist::Zilla
   Dist::Zilla::App::Command::cover
@@ -28,6 +37,7 @@ my @modules = qw(
   Dist::Zilla::Plugin::GatherDir
   Dist::Zilla::Plugin::GenerateFile
   Dist::Zilla::Plugin::Git::Describe
+  Dist::Zilla::Plugin::Git::Init
   Dist::Zilla::Plugin::Git::NextVersion
   Dist::Zilla::Plugin::GithubMeta
   Dist::Zilla::Plugin::InstallRelease
@@ -52,8 +62,10 @@ my @modules = qw(
   Dist::Zilla::Plugin::ReadmeAnyFromPod
   Dist::Zilla::Plugin::Repository
   Dist::Zilla::Plugin::Run
+  Dist::Zilla::Plugin::Run::AfterMint
   Dist::Zilla::Plugin::ShareDir
   Dist::Zilla::Plugin::TaskWeaver
+  Dist::Zilla::Plugin::TemplateModule
   Dist::Zilla::Plugin::Test::ChangesHasContent
   Dist::Zilla::Plugin::Test::PodSpelling
   Dist::Zilla::Plugin::Test::ReportPrereqs
@@ -61,6 +73,7 @@ my @modules = qw(
   Dist::Zilla::Plugin::UploadToCPAN
   Dist::Zilla::PluginBundle::Git
   Dist::Zilla::PluginBundle::TestingMania
+  Dist::Zilla::Role::MintingProfile::ShareDir
   Dist::Zilla::Role::Plugin
   Dist::Zilla::Role::PluginBundle::Config::Slicer
   Dist::Zilla::Role::PluginBundle::Easy
@@ -69,12 +82,16 @@ my @modules = qw(
   Dist::Zilla::Stash::PodWeaver
   ExtUtils::MakeMaker
   File::Find
+  File::ShareDir::Install
   File::Spec::Functions
   File::Temp
+  Git::Wrapper
   List::Util
   Module::Build
   Moose
   Moose::Util::TypeConstraints
+  MooseX::AttributeShortcuts
+  Path::Class
   Pod::Elemental::Transformer::List
   Pod::Weaver
   Pod::Weaver::Config::Assembler
@@ -94,6 +111,7 @@ my @modules = qw(
   Pod::Weaver::Section::Support
   Pod::Weaver::Section::Version
   Test::DZil
+  Test::File::ShareDir
   Test::More
   YAML::Tiny
   perl

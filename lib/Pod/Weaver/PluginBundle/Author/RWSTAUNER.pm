@@ -12,7 +12,7 @@ use warnings;
 
 package Pod::Weaver::PluginBundle::Author::RWSTAUNER;
 {
-  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '4.000';
+  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '4.100';
 }
 BEGIN {
   $Pod::Weaver::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -86,14 +86,11 @@ sub mvp_bundle_config {
     # include Support section with various cpan links and github repo
     [ 'Support',     _exp('Support'),
       {
-        ':version' => '1.001',
+        ':version' => '1.005', # metacpan
         repository_content => '',
         repository_link => 'both',
-        # NOTE: it may be worth watching the module to see if more are added
-        # removed: 'anno' - anyone use this? ratings or bugs are probably better
-        # removed: 'forum' - does anyone use this?
-        # removed: 'kwalitee' - site has been broken for a while
-        websites => [ qw(search rt ratings testers testmatrix deps) ],
+        # metacpan links to everything else
+        websites => [ qw(metacpan) ],
       }
     ],
 
@@ -137,7 +134,7 @@ Pod::Weaver::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Pod::Weaver config
 
 =head1 VERSION
 
-version 4.000
+version 4.100
 
 =head1 SYNOPSIS
 
@@ -202,15 +199,10 @@ This bundle is roughly equivalent to:
   region_name = postlude
 
   [Support]
-  :version           = 1.001
+  :version           = 1.005
   repository_content =
   repository_link    = both
-  websites           = search
-  websites           = rt
-  websites           = ratings
-  websites           = testers
-  websites           = testmatrix
-  websites           = deps
+  websites           = metacpan
 
   [Generic / Acknowledgements]
   header = ACKNOWLEDGEMENTS

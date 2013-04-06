@@ -1,5 +1,11 @@
 Revision history for Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
+4.100     2013-04-06T03:22:21Z
+
+  - Add MintingProfile and use PluginBundle::Easy to generate mint files
+  - Bump Pod::Weaver::Section::Support prereq to 1.005 and configure it
+    to only link to metacpan (since that links to everything else).
+
 4.000     2013-03-24T05:25:29Z
 
   - Use BundleInspector plugin to determine prereq info and generate
