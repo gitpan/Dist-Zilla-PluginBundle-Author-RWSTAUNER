@@ -11,7 +11,7 @@ use warnings;
 
 package Dist::Zilla::MintingProfile::Author::RWSTAUNER;
 {
-  $Dist::Zilla::MintingProfile::Author::RWSTAUNER::VERSION = '4.100';
+  $Dist::Zilla::MintingProfile::Author::RWSTAUNER::VERSION = '4.101';
 }
 BEGIN {
   $Dist::Zilla::MintingProfile::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -39,7 +39,7 @@ Dist::Zilla::MintingProfile::Author::RWSTAUNER - Mint a new dist for RWSTAUNER
 
 =head1 VERSION
 
-version 4.100
+version 4.101
 
 =head1 SYNOPSIS
 

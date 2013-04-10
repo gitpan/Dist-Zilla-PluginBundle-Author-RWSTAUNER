@@ -12,9 +12,9 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
 {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '4.100';
+  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '4.101';
 }
-# git description: v4.000-11-ga1d5a63
+# git description: v4.100-1-gae7343e
 
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
@@ -397,7 +397,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 4.100
+version 4.101
 
 =head1 SYNOPSIS
 

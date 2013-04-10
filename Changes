@@ -1,5 +1,11 @@
 Revision history for Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
+4.101     2013-04-10T05:42:18Z
+
+  [Test Fixes]
+  - Fix unintentional failure to stringify dir arg to Git::Wrapper in tests
+    to avoid test report failures with Git::Wrapper 0.028_96 dev release
+
 4.100     2013-04-06T03:22:21Z
 
   - Add MintingProfile and use PluginBundle::Easy to generate mint files
