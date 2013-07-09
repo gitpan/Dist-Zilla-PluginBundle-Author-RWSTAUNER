@@ -114,6 +114,7 @@ my @modules = qw(
   Test::File::ShareDir
   Test::More
   YAML::Tiny
+  lib
   perl
   strict
   warnings

@@ -119,9 +119,10 @@ my %WriteMakefileArgs = (
     "Path::Class" => 0,
     "Test::DZil" => 0,
     "Test::File::ShareDir" => 0,
-    "Test::More" => "0.96"
+    "Test::More" => "0.96",
+    "lib" => 0
   },
-  "VERSION" => "4.101",
+  "VERSION" => "4.102",
   "test" => {
     "TESTS" => "t/*.t"
   }

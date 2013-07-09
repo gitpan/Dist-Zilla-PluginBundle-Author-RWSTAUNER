@@ -1,5 +1,10 @@
 Revision history for Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
+4.102     2013-07-09T23:28:02Z
+
+  - Add 'open_source' option which can be disabled for darkpan projects
+    to exclude various cpan/meta/repo/xt/change log plugins.
+
 4.101     2013-04-10T05:42:18Z
 
   [Test Fixes]

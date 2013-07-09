@@ -18,7 +18,7 @@ my %module_build_args = (
     "Randy Stauner <rwstauner\@cpan.org>"
   ],
   "dist_name" => "Dist-Zilla-PluginBundle-Author-RWSTAUNER",
-  "dist_version" => "4.101",
+  "dist_version" => "4.102",
   "license" => "perl",
   "module_name" => "Dist::Zilla::PluginBundle::Author::RWSTAUNER",
   "recommends" => {
@@ -131,7 +131,8 @@ my %module_build_args = (
     "Path::Class" => 0,
     "Test::DZil" => 0,
     "Test::File::ShareDir" => 0,
-    "Test::More" => "0.96"
+    "Test::More" => "0.96",
+    "lib" => 0
   }
 );
 
