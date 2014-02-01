@@ -11,7 +11,7 @@ use strict;
 use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter;
-$Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::VERSION = '4.200';
+$Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::VERSION = '4.201';
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::AUTHORITY = 'cpan:RWSTAUNER';
 }
@@ -139,7 +139,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter - RWSTAUNER's Dist::Zilla c
 
 =head1 VERSION
 
-version 4.200
+version 4.201
 
 =head1 SYNOPSIS
 

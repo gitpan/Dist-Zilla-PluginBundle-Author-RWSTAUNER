@@ -64,7 +64,7 @@
          },
          "requires" : {
             "Data::Section" : "0",
-            "Dist::Zilla" : "4.300032",
+            "Dist::Zilla" : "5",
             "Dist::Zilla::Plugin::Authority" : "1.005",
             "Dist::Zilla::Plugin::AutoPrereqs" : "0",
             "Dist::Zilla::Plugin::Bootstrap::lib" : "0",
@@ -126,7 +126,7 @@
             "MooseX::AttributeShortcuts" : "0",
             "Pod::Elemental::Transformer::List" : "0",
             "Pod::Markdown" : "2.000",
-            "Pod::Weaver" : "3.101633",
+            "Pod::Weaver" : "4",
             "Pod::Weaver::Config::Assembler" : "0",
             "Pod::Weaver::Plugin::SingleEncoding" : "0",
             "Pod::Weaver::Plugin::StopWords" : "1.005",
@@ -176,19 +176,19 @@
    "provides" : {
       "Dist::Zilla::MintingProfile::Author::RWSTAUNER" : {
          "file" : "lib/Dist/Zilla/MintingProfile/Author/RWSTAUNER.pm",
-         "version" : "4.200"
+         "version" : "4.201"
       },
       "Dist::Zilla::PluginBundle::Author::RWSTAUNER" : {
          "file" : "lib/Dist/Zilla/PluginBundle/Author/RWSTAUNER.pm",
-         "version" : "4.200"
+         "version" : "4.201"
       },
       "Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter" : {
          "file" : "lib/Dist/Zilla/PluginBundle/Author/RWSTAUNER/Minter.pm",
-         "version" : "4.200"
+         "version" : "4.201"
       },
       "Pod::Weaver::PluginBundle::Author::RWSTAUNER" : {
          "file" : "lib/Pod/Weaver/PluginBundle/Author/RWSTAUNER.pm",
-         "version" : "4.200"
+         "version" : "4.201"
       }
    },
    "release_status" : "stable",
@@ -204,7 +204,7 @@
          "web" : "https://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER"
       }
    },
-   "version" : "4.200",
+   "version" : "4.201",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.016003"

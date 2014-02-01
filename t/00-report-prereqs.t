@@ -84,7 +84,7 @@ my $static_prereqs = do { my $x = {
                                       },
                       'requires' => {
                                       'Data::Section' => '0',
-                                      'Dist::Zilla' => '4.300032',
+                                      'Dist::Zilla' => '5',
                                       'Dist::Zilla::Plugin::Authority' => '1.005',
                                       'Dist::Zilla::Plugin::AutoPrereqs' => '0',
                                       'Dist::Zilla::Plugin::Bootstrap::lib' => '0',
@@ -146,7 +146,7 @@ my $static_prereqs = do { my $x = {
                                       'MooseX::AttributeShortcuts' => '0',
                                       'Pod::Elemental::Transformer::List' => '0',
                                       'Pod::Markdown' => '2.000',
-                                      'Pod::Weaver' => '3.101633',
+                                      'Pod::Weaver' => '4',
                                       'Pod::Weaver::Config::Assembler' => '0',
                                       'Pod::Weaver::Plugin::SingleEncoding' => '0',
                                       'Pod::Weaver::Plugin::StopWords' => '1.005',

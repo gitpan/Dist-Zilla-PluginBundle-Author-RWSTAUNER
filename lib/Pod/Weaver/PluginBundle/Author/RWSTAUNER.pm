@@ -11,7 +11,7 @@ use strict;
 use warnings;
 
 package Pod::Weaver::PluginBundle::Author::RWSTAUNER;
-$Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '4.200';
+$Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '4.201';
 BEGIN {
   $Pod::Weaver::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
 }
@@ -133,7 +133,7 @@ Pod::Weaver::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Pod::Weaver config
 
 =head1 VERSION
 
-version 4.200
+version 4.201
 
 =head1 SYNOPSIS
 

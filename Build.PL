@@ -19,7 +19,7 @@ my %module_build_args = (
     "Randy Stauner <rwstauner\@cpan.org>"
   ],
   "dist_name" => "Dist-Zilla-PluginBundle-Author-RWSTAUNER",
-  "dist_version" => "4.200",
+  "dist_version" => "4.201",
   "license" => "perl",
   "module_name" => "Dist::Zilla::PluginBundle::Author::RWSTAUNER",
   "recommends" => {
@@ -32,7 +32,7 @@ my %module_build_args = (
   "recursive_test_files" => 1,
   "requires" => {
     "Data::Section" => 0,
-    "Dist::Zilla" => "4.300032",
+    "Dist::Zilla" => 5,
     "Dist::Zilla::Plugin::Authority" => "1.005",
     "Dist::Zilla::Plugin::AutoPrereqs" => 0,
     "Dist::Zilla::Plugin::Bootstrap::lib" => 0,
@@ -94,7 +94,7 @@ my %module_build_args = (
     "MooseX::AttributeShortcuts" => 0,
     "Pod::Elemental::Transformer::List" => 0,
     "Pod::Markdown" => "2.000",
-    "Pod::Weaver" => "3.101633",
+    "Pod::Weaver" => 4,
     "Pod::Weaver::Config::Assembler" => 0,
     "Pod::Weaver::Plugin::SingleEncoding" => 0,
     "Pod::Weaver::Plugin::StopWords" => "1.005",

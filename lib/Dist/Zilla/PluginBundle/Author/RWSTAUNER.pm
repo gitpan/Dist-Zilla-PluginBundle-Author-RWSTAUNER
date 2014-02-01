@@ -11,8 +11,8 @@ use strict;
 use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
-# git description: v4.102-4-gaf0d0ff
-$Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '4.200';
+# git description: v4.200-1-g511b379
+$Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '4.201';
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
 }
@@ -439,7 +439,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 4.200
+version 4.201
 
 =head1 SYNOPSIS
 
