@@ -11,9 +11,7 @@ use strict;
 use warnings;
 
 package Pod::Weaver::PluginBundle::Author::RWSTAUNER;
-{
-  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '4.102';
-}
+$Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '4.200';
 BEGIN {
   $Pod::Weaver::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
 }
@@ -42,7 +40,7 @@ sub mvp_bundle_config {
 
   push @plugins, (
     # plugin
-    _plain('-Encoding'),
+    _plain('-SingleEncoding'),
     _plain('-WikiDoc'),
     # default
     _plain('@CorePrep'),
@@ -124,9 +122,10 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
-=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Sergey Romanov
+<complefor@rambler.ru>
 
 =head1 NAME
 
@@ -134,7 +133,7 @@ Pod::Weaver::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Pod::Weaver config
 
 =head1 VERSION
 
-version 4.102
+version 4.200
 
 =head1 SYNOPSIS
 
@@ -156,7 +155,7 @@ you don't need a F<weaver.ini> at all.
 
 This bundle is roughly equivalent to:
 
-  [-Encoding]
+  [-SingleEncoding]
   [-WikiDoc]
   [@CorePrep]
   [Name]

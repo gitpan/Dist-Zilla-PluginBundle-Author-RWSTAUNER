@@ -11,11 +11,8 @@ use strict;
 use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
-{
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '4.102';
-}
-# git description: v4.101-2-gc9d181f
-
+# git description: v4.102-4-gaf0d0ff
+$Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '4.200';
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
 }
@@ -186,6 +183,12 @@ sub configure {
     # generated tags file... useful for development but noisy to commit
     [ PruneFiles => 'PruneTags' => { match => '^tags$' } ],
 
+    # We could specify default binary files
+    # but I can't think of any that are commonly included in dists.
+    # I don't mind being explicit if the case is rare.
+    #[ Encoding => 'DefaultBinaryFiles' =>
+      #{ encoding => 'binary', match => '\.(?x: tar\.(gz|bz2) | sqlite | jpg )$' }],
+
   # munge files
     [
       Authority => {
@@ -229,7 +232,7 @@ sub configure {
       # generate README.pod in repo root for github
       ReadmeAnyFromPod => {
         ':version' => '0.120120',
-        type       => 'pod',
+        type       => 'markdown',
         location   => 'root',
       }
     ],
@@ -361,7 +364,7 @@ sub configure {
   # defaults: { tag_format => '%v', push_to => [ qw(origin) ] }
   $self->add_bundle('@Git' => {
     ':version' => '2.004', # improved changelog parsing
-    allow_dirty => [qw(Changes README.pod)],
+    allow_dirty => [qw(Changes README.mkdn README.pod)],
     commit_msg  => 'v%v%t%n%n%c'
   })
     if $self->use_git_bundle;
@@ -424,11 +427,11 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
-=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle cpan testmatrix url
-annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata
-placeholders metacpan
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Sergey Romanov
+<complefor@rambler.ru> cpan testmatrix url annocpan anno bugtracker rt
+cpants kwalitee diff irc mailto metadata placeholders metacpan
 
 =head1 NAME
 
@@ -436,7 +439,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 4.102
+version 4.200
 
 =head1 SYNOPSIS
 
@@ -565,7 +568,7 @@ This bundle is roughly equivalent to the following (generated) F<dist.ini>:
   [ReadmeAnyFromPod]
   :version = 0.120120
   location = root
-  type     = pod
+  type     = markdown
 
   [Bugtracker]
 
@@ -631,6 +634,7 @@ This bundle is roughly equivalent to the following (generated) F<dist.ini>:
   [@Git]
   :version    = 2.004
   allow_dirty = Changes
+  allow_dirty = README.mkdn
   allow_dirty = README.pod
   commit_msg  = v%v%t%n%n%c
 
@@ -708,6 +712,10 @@ L<https://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
 =head1 AUTHOR
 
 Randy Stauner <rwstauner@cpan.org>
+
+=head1 CONTRIBUTOR
+
+Sergey Romanov <complefor@rambler.ru>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -11,9 +11,7 @@ use strict;
 use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter;
-{
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::VERSION = '4.102';
-}
+$Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::VERSION = '4.200';
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::AUTHORITY = 'cpan:RWSTAUNER';
 }
@@ -130,9 +128,10 @@ __PACKAGE__->meta->make_immutable;
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
-=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Sergey Romanov
+<complefor@rambler.ru>
 
 =head1 NAME
 
@@ -140,7 +139,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter - RWSTAUNER's Dist::Zilla c
 
 =head1 VERSION
 
-version 4.102
+version 4.200
 
 =head1 SYNOPSIS
 
