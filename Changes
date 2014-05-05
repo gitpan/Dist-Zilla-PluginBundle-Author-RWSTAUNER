@@ -1,5 +1,10 @@
 Revision history for Dist-Zilla-PluginBundle-Author-RWSTAUNER
 
+4.202     2014-05-05T03:31:07Z
+
+  - Bump prereq on @TestingMania to use Test::NoTabs instead of NoTabsTest.
+  - Change README minter template from pod to markdown.
+
 4.201     2014-02-01T16:40:02Z
 
   - Bump Dist::Zilla and Pod::Weaver prereqs for Encoding updates.

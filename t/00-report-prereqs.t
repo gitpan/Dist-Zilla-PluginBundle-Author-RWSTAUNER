@@ -133,7 +133,7 @@ my $static_prereqs = do { my $x = {
                                       'Dist::Zilla::Plugin::TestRelease' => '0',
                                       'Dist::Zilla::Plugin::UploadToCPAN' => '0',
                                       'Dist::Zilla::PluginBundle::Git' => '2.004',
-                                      'Dist::Zilla::PluginBundle::TestingMania' => '0.019',
+                                      'Dist::Zilla::PluginBundle::TestingMania' => '0.22',
                                       'Dist::Zilla::Role::MintingProfile::ShareDir' => '0',
                                       'Dist::Zilla::Role::PluginBundle::Config::Slicer' => '0',
                                       'Dist::Zilla::Role::PluginBundle::Easy' => '0',

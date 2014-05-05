@@ -11,8 +11,8 @@ use strict;
 use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
-# git description: v4.200-1-g511b379
-$Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '4.201';
+# git description: v4.201-2-g731fb16
+$Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '4.202';
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
 }
@@ -322,7 +322,7 @@ sub configure {
   if( $self->open_source ){
     # NOTE: A newer TestingMania might duplicate plugins if new tests are added
     $self->add_bundle('@TestingMania' => {
-      ':version'      => '0.019', # max_target_perl
+      ':version'      => '0.22', # max_target_perl, Test::NoTabs
       max_target_perl =>     $self->max_target_perl,
     });
   }
@@ -439,7 +439,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 4.201
+version 4.202
 
 =head1 SYNOPSIS
 
@@ -618,7 +618,7 @@ This bundle is roughly equivalent to the following (generated) F<dist.ini>:
   [Test::PodSpelling]
 
   [@TestingMania]
-  :version        = 0.019
+  :version        = 0.22
   max_target_perl = 5.008
 
   [Manifest]

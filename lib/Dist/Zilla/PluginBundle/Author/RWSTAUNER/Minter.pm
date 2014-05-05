@@ -11,7 +11,7 @@ use strict;
 use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter;
-$Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::VERSION = '4.201';
+$Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::VERSION = '4.202';
 BEGIN {
   $Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::AUTHORITY = 'cpan:RWSTAUNER';
 }
@@ -139,7 +139,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter - RWSTAUNER's Dist::Zilla c
 
 =head1 VERSION
 
-version 4.201
+version 4.202
 
 =head1 SYNOPSIS
 
@@ -180,15 +180,14 @@ This bundle is roughly equivalent to the following (generated) F<profile.ini>:
   filename    = .gitignore
   is_template = 1
 
-  [GenerateFile / Generate-README.pod]
-  content     = {{'='}}head1 NAME
+  [GenerateFile / Generate-README.mkdn]
+  content     = # NAME
   content     = {{ (my $n = $dist->name) =~ s/-/::/g; $n }} - undef
-  content     = {{'='}}head1 COPYRIGHT AND LICENSE
+  content     = # COPYRIGHT AND LICENSE
   content     = This software is copyright (c) {{ (localtime)[5]+1900 }} by {{ $dist->copyright_holder }}.
   content     = This is free software; you can redistribute it and/or modify it under
   content     = the same terms as the Perl 5 programming language system itself.
-  content     = {{'='}}cut
-  filename    = README.pod
+  filename    = README.mkdn
   is_template = 1
 
   [GenerateFile / Generate-dist.ini]
@@ -282,16 +281,14 @@ Revision history for {{$dist->name}}
 {{ '{{$NEXT}}' }}
 
   - Initial release
-__[ README.pod ]__
-{{'='}}head1 NAME
+__[ README.mkdn ]__
+# NAME
 
 {{ (my $n = $dist->name) =~ s/-/::/g; $n }} - undef
 
-{{'='}}head1 COPYRIGHT AND LICENSE
+# COPYRIGHT AND LICENSE
 
 This software is copyright (c) {{ (localtime)[5]+1900 }} by {{ $dist->copyright_holder }}.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-
-{{'='}}cut
