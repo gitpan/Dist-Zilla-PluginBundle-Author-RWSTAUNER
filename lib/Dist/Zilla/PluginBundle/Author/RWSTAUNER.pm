@@ -11,11 +11,10 @@ use strict;
 use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER;
-# git description: v4.201-2-g731fb16
-$Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '4.202';
-BEGIN {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
-}
+# git description: v4.202-4-gffdef5a
+
+our $AUTHORITY = 'cpan:RWSTAUNER';
+$Dist::Zilla::PluginBundle::Author::RWSTAUNER::VERSION = '4.203';
 # ABSTRACT: RWSTAUNER's Dist::Zilla config
 
 use Moose;
@@ -190,6 +189,8 @@ sub configure {
       #{ encoding => 'binary', match => '\.(?x: tar\.(gz|bz2) | sqlite | jpg )$' }],
 
   # munge files
+    # Do PkgVersion first so other mungers don't eat the blank line after package.
+    ($self->placeholder_comments ? 'OurPkgVersion' : 'PkgVersion'),
     [
       Authority => {
         ':version'     => '1.005', # accepts any non-whitespace + locate_comment
@@ -206,7 +207,6 @@ sub configure {
       }
     ],
     'Git::Describe',
-    ($self->placeholder_comments ? 'OurPkgVersion' : 'PkgVersion'),
     [
       Prepender => {
         ':version' => '1.112280', # 'skip' attribute
@@ -238,10 +238,13 @@ sub configure {
     ],
 
   # metadata
-    'Bugtracker',
-    # won't find git if not in repository root (!-e ".git")
-    [ Repository => { ':version' => '0.16' } ], # deprecates github_http
-    # overrides [Repository] if repository is on github
+    [
+      AutoMetaResources => {
+        'bugtracker.rt' => 1,
+        # Currently GithubMeta sets the homepage and this conflicts.
+        #'homepage' => 'http://metacpan.org/release/%{dist}',
+      }
+    ],
     [ GithubMeta => { ':version' => '0.10' } ],
     [ ContributorsFromGit => { ':version' => '0.005' } ],
   ) if $self->open_source;
@@ -255,7 +258,19 @@ sub configure {
       MetaNoIndex => {
         ':version' => 1.101130,
         # could use grep { -d $_ } but that will miss any generated files
-        directory => [qw(corpus examples inc share t xt)],
+        directory => [
+          # By default skip all directories that PAUSE skips:
+          't',        # skip "t" - libraries in ./t are test libraries!
+          'xt',       # skip "xt" - libraries in ./xt are author test libraries!
+          'inc',      # skip "inc" - libraries in ./inc are usually install libraries
+          'local',    # skip "local" - somebody shipped his carton setup!
+          'perl5',    # skip 'perl5" - somebody shipped her local::lib!
+          'fatlib',   # skip 'fatlib' - somebody shipped their fatpack lib!
+          # Also skip a few other directories commonly used for other things.
+          'corpus',   # Documentation and/or test data.
+          'examples', # Example
+          'share',    # File::ShareDir... misc files distributed with release.
+        ],
         namespace => [qw(Local t::lib)],
         'package' => [qw(DB)],
       }
@@ -429,9 +444,9 @@ __END__
 
 =encoding UTF-8
 
-=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Sergey Romanov
-<complefor@rambler.ru> cpan testmatrix url annocpan anno bugtracker rt
-cpants kwalitee diff irc mailto metadata placeholders metacpan
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Romanov Sergey cpan
+testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto
+metadata placeholders metacpan
 
 =head1 NAME
 
@@ -439,7 +454,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Dist::Zilla config
 
 =head1 VERSION
 
-version 4.202
+version 4.203
 
 =head1 SYNOPSIS
 
@@ -542,6 +557,8 @@ This bundle is roughly equivalent to the following (generated) F<dist.ini>:
   [PruneFiles / PruneTags]
   match = ^tags$
 
+  [PkgVersion]
+
   [Authority]
   :version       = 1.005
   do_metadata    = 1
@@ -553,7 +570,6 @@ This bundle is roughly equivalent to the following (generated) F<dist.ini>:
   time_zone = UTC
 
   [Git::Describe]
-  [PkgVersion]
 
   [Prepender]
   :version = 1.112280
@@ -570,10 +586,8 @@ This bundle is roughly equivalent to the following (generated) F<dist.ini>:
   location = root
   type     = markdown
 
-  [Bugtracker]
-
-  [Repository]
-  :version = 0.16
+  [AutoMetaResources]
+  bugtracker.rt = 1
 
   [GithubMeta]
   :version = 0.10
@@ -585,12 +599,15 @@ This bundle is roughly equivalent to the following (generated) F<dist.ini>:
 
   [MetaNoIndex]
   :version  = 1.10113
-  directory = corpus
-  directory = examples
-  directory = inc
-  directory = share
   directory = t
   directory = xt
+  directory = inc
+  directory = local
+  directory = perl5
+  directory = fatlib
+  directory = corpus
+  directory = examples
+  directory = share
   namespace = Local
   namespace = t::lib
   package   = DB
@@ -699,7 +716,7 @@ L<http://metacpan.org/release/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
 =head2 Bugs / Feature Requests
 
 Please report any bugs or feature requests by email to C<bug-dist-zilla-pluginbundle-author-rwstauner at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Dist-Zilla-PluginBundle-Author-RWSTAUNER>. You will be automatically notified of any
+the web interface at L<https://rt.cpan.org/Public/Bug/Report.html?Queue=Dist-Zilla-PluginBundle-Author-RWSTAUNER>. You will be automatically notified of any
 progress on the request by the system.
 
 =head2 Source Code
@@ -714,6 +731,8 @@ L<https://github.com/rwstauner/Dist-Zilla-PluginBundle-Author-RWSTAUNER>
 Randy Stauner <rwstauner@cpan.org>
 
 =head1 CONTRIBUTOR
+
+=for stopwords Sergey Romanov
 
 Sergey Romanov <complefor@rambler.ru>
 

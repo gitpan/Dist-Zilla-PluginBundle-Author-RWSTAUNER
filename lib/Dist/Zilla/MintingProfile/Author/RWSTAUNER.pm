@@ -10,10 +10,8 @@ use strict;
 use warnings;
 
 package Dist::Zilla::MintingProfile::Author::RWSTAUNER;
-$Dist::Zilla::MintingProfile::Author::RWSTAUNER::VERSION = '4.202';
-BEGIN {
-  $Dist::Zilla::MintingProfile::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
-}
+our $AUTHORITY = 'cpan:RWSTAUNER';
+$Dist::Zilla::MintingProfile::Author::RWSTAUNER::VERSION = '4.203';
 # ABSTRACT: Mint a new dist for RWSTAUNER
 
 use Moose;
@@ -29,8 +27,7 @@ __END__
 
 =encoding UTF-8
 
-=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Sergey Romanov
-<complefor@rambler.ru>
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Romanov Sergey
 
 =head1 NAME
 
@@ -38,7 +35,7 @@ Dist::Zilla::MintingProfile::Author::RWSTAUNER - Mint a new dist for RWSTAUNER
 
 =head1 VERSION
 
-version 4.202
+version 4.203
 
 =head1 SYNOPSIS
 

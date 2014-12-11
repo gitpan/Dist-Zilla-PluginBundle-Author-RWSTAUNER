@@ -11,12 +11,9 @@ use strict;
 use warnings;
 
 package Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter;
-$Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::VERSION = '4.202';
-BEGIN {
-  $Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::AUTHORITY = 'cpan:RWSTAUNER';
-}
+our $AUTHORITY = 'cpan:RWSTAUNER';
 # ABSTRACT: RWSTAUNER's Dist::Zilla config for minting
-
+$Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter::VERSION = '4.203';
 use Moose;
 use MooseX::AttributeShortcuts;
 use Git::Wrapper;
@@ -130,8 +127,7 @@ __PACKAGE__->meta->make_immutable;
 
 =encoding UTF-8
 
-=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Sergey Romanov
-<complefor@rambler.ru>
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Romanov Sergey
 
 =head1 NAME
 
@@ -139,7 +135,7 @@ Dist::Zilla::PluginBundle::Author::RWSTAUNER::Minter - RWSTAUNER's Dist::Zilla c
 
 =head1 VERSION
 
-version 4.202
+version 4.203
 
 =head1 SYNOPSIS
 
@@ -171,6 +167,13 @@ This bundle is roughly equivalent to the following (generated) F<profile.ini>:
   [Run::AfterMint]
   run = %x -e "mkdir(shift(@ARGV))" %d%pt
 
+  [GenerateFile / Generate-Changes]
+  content     = Revision history for {{$dist->name}}
+  content     = {{ '{{$NEXT}}' }}
+  content     =   - Initial release
+  filename    = Changes
+  is_template = 1
+
   [GenerateFile / Generate-.gitignore]
   content     = /{{$dist->name}}*
   content     = /.build
@@ -178,16 +181,6 @@ This bundle is roughly equivalent to the following (generated) F<profile.ini>:
   content     = /nytprof*
   content     = /tags
   filename    = .gitignore
-  is_template = 1
-
-  [GenerateFile / Generate-README.mkdn]
-  content     = # NAME
-  content     = {{ (my $n = $dist->name) =~ s/-/::/g; $n }} - undef
-  content     = # COPYRIGHT AND LICENSE
-  content     = This software is copyright (c) {{ (localtime)[5]+1900 }} by {{ $dist->copyright_holder }}.
-  content     = This is free software; you can redistribute it and/or modify it under
-  content     = the same terms as the Perl 5 programming language system itself.
-  filename    = README.mkdn
   is_template = 1
 
   [GenerateFile / Generate-dist.ini]
@@ -210,11 +203,14 @@ This bundle is roughly equivalent to the following (generated) F<profile.ini>:
   filename    = dist.ini
   is_template = 1
 
-  [GenerateFile / Generate-Changes]
-  content     = Revision history for {{$dist->name}}
-  content     = {{ '{{$NEXT}}' }}
-  content     =   - Initial release
-  filename    = Changes
+  [GenerateFile / Generate-README.mkdn]
+  content     = # NAME
+  content     = {{ (my $n = $dist->name) =~ s/-/::/g; $n }} - undef
+  content     = # COPYRIGHT AND LICENSE
+  content     = This software is copyright (c) {{ (localtime)[5]+1900 }} by {{ $dist->copyright_holder }}.
+  content     = This is free software; you can redistribute it and/or modify it under
+  content     = the same terms as the Perl 5 programming language system itself.
+  filename    = README.mkdn
   is_template = 1
 
   [GenerateFile / Generate-.mailmap]

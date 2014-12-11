@@ -11,10 +11,8 @@ use strict;
 use warnings;
 
 package Pod::Weaver::PluginBundle::Author::RWSTAUNER;
-$Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '4.202';
-BEGIN {
-  $Pod::Weaver::PluginBundle::Author::RWSTAUNER::AUTHORITY = 'cpan:RWSTAUNER';
-}
+our $AUTHORITY = 'cpan:RWSTAUNER';
+$Pod::Weaver::PluginBundle::Author::RWSTAUNER::VERSION = '4.203';
 # ABSTRACT: RWSTAUNER's Pod::Weaver config
 
 use Pod::Weaver::Config::Assembler;
@@ -124,8 +122,7 @@ __END__
 
 =encoding UTF-8
 
-=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Sergey Romanov
-<complefor@rambler.ru>
+=for :stopwords Randy Stauner ACKNOWLEDGEMENTS RWSTAUNER's PluginBundle Romanov Sergey
 
 =head1 NAME
 
@@ -133,7 +130,7 @@ Pod::Weaver::PluginBundle::Author::RWSTAUNER - RWSTAUNER's Pod::Weaver config
 
 =head1 VERSION
 
-version 4.202
+version 4.203
 
 =head1 SYNOPSIS
 
